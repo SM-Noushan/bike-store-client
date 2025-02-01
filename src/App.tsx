@@ -1,9 +1,7 @@
+import MainLayout from "./component/layout/MainLayout";
+
 function App() {
-  return (
-    <>
-      <h1 className="text-3xl font-bold underline">Hello world!</h1>
-    </>
-  );
+  return <MainLayout />;
 }
 
 export default App;
