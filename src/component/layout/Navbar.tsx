@@ -1,215 +1,112 @@
-import { useState } from "react";
 import {
-  Dialog,
-  DialogPanel,
   Disclosure,
   DisclosureButton,
   DisclosurePanel,
-  Popover,
-  PopoverButton,
-  PopoverGroup,
-  PopoverPanel,
+  Transition,
 } from "@headlessui/react";
-import {
-  ArrowPathIcon,
-  Bars3Icon,
-  ChartPieIcon,
-  CursorArrowRaysIcon,
-  FingerPrintIcon,
-  SquaresPlusIcon,
-  XMarkIcon,
-} from "@heroicons/react/24/outline";
-import {
-  ChevronDownIcon,
-  PhoneIcon,
-  PlayCircleIcon,
-  ShoppingBagIcon,
-  MagnifyingGlassIcon,
-} from "@heroicons/react/20/solid";
+import { MenuIcon, XIcon } from "lucide-react";
+import { NavLink } from "react-router-dom";
 
-import logo from "../../assets/logo.png";
-
-const products = [
-  {
-    name: "Analytics",
-    description: "Get a better understanding of your traffic",
-    href: "#",
-    icon: ChartPieIcon,
-  },
-  {
-    name: "Engagement",
-    description: "Speak directly to your customers",
-    href: "#",
-    icon: CursorArrowRaysIcon,
-  },
-  {
-    name: "Security",
-    description: "Your customers’ data will be safe and secure",
-    href: "#",
-    icon: FingerPrintIcon,
-  },
-  {
-    name: "Integrations",
-    description: "Connect with third-party tools",
-    href: "#",
-    icon: SquaresPlusIcon,
-  },
-  {
-    name: "Automations",
-    description: "Build strategic funnels that will convert",
-    href: "#",
-    icon: ArrowPathIcon,
-  },
-];
-const callsToAction = [
-  { name: "Watch demo", href: "#", icon: PlayCircleIcon },
-  { name: "Contact sales", href: "#", icon: PhoneIcon },
+// Navigation items array (DRY)
+const navigation = [
+  { name: "Home", href: "/" },
+  { name: "Products", href: "/products" },
+  { name: "About us", href: "/about-us" },
 ];
 
-export default function Example() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+// Base styling for links using the Zinc palette
+const baseLinkClasses =
+  "my-2 text-zinc-800 border-b-2 border-transparent transition-colors duration-300 transform hover:text-zinc-950 md:mx-4 md:my-0";
 
+// Additional classes when the link is active
+const activeLinkClasses = "font-bold text-zinc-900 border-b-2 !border-zinc-900";
+
+export default function Navbar() {
   return (
-    <header className="bg-white">
-      <nav
-        aria-label="Global"
-        className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8"
-      >
-        <div className="flex lg:flex-1">
-          <a href="#" className="-m-1.5 p-1.5">
-            <span className="sr-only">Your Company</span>
-            <img alt="" src={logo} className="h-8 w-auto" />
-          </a>
-        </div>
-        <div className="flex lg:hidden">
-          <button
-            type="button"
-            onClick={() => setMobileMenuOpen(true)}
-            className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
-          >
-            <span className="sr-only">Open main menu</span>
-            <Bars3Icon aria-hidden="true" className="size-6" />
-          </button>
-        </div>
-        <PopoverGroup className="hidden lg:flex lg:gap-x-12">
-          <a
-            href="#"
-            className="text-sm/6 lg:text-lg/6 font-semibold text-gray-900"
-          >
-            home
-          </a>
-          <a
-            href="#"
-            className="text-sm/6 lg:text-lg/6 font-semibold text-gray-900"
-          >
-            menu
-          </a>
-          <a
-            href="#"
-            className="text-sm/6 lg:text-lg/6 font-semibold text-gray-900"
-          >
-            about us
-          </a>
-          <a
-            href="#"
-            className="text-sm/6 lg:text-lg/6 font-semibold text-gray-900"
-          >
-            contact us
-          </a>
-        </PopoverGroup>
+    <Disclosure as="nav" className="bg-gray-100">
+      {({ open }) => (
+        <>
+          <div className="container max-w-screen-2xl px-12 py-4 mx-auto flex items-center justify-between flex-wrap">
+            {/* Logo */}
+            <NavLink to="/" className="flex items-center">
+              <h1 className="font-black text-2xl">BikeStore</h1>
+            </NavLink>
 
-        <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-          <a href="#" className="text-sm/6 font-semibold text-gray-900">
-            <MagnifyingGlassIcon className="size-6" />
-          </a>
-          <a href="#" className="text-sm/6 font-semibold text-gray-900">
-            <ShoppingBagIcon className="size-6" />
-          </a>
-          <a href="#" className="text-sm/6 font-semibold text-gray-900">
-            Sign in <span aria-hidden="true">&rarr;</span>
-          </a>
-        </div>
-      </nav>
-      <Dialog
-        open={mobileMenuOpen}
-        onClose={setMobileMenuOpen}
-        className="lg:hidden"
-      >
-        <div className="fixed inset-0 z-10" />
-        <DialogPanel className="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
-          <div className="flex items-center justify-between">
-            <a href="#" className="-m-1.5 p-1.5">
-              <span className="sr-only">Your Company</span>
-              <img
-                alt=""
-                src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=600"
-                className="h-8 w-auto"
-              />
-            </a>
-            <button
-              type="button"
-              onClick={() => setMobileMenuOpen(false)}
-              className="-m-2.5 rounded-md p-2.5 text-gray-700"
-            >
-              <span className="sr-only">Close menu</span>
-              <XMarkIcon aria-hidden="true" className="size-6" />
-            </button>
-          </div>
-          <div className="mt-6 flow-root">
-            <div className="-my-6 divide-y divide-gray-500/10">
-              <div className="space-y-2 py-6">
-                <Disclosure as="div" className="-mx-3">
-                  <DisclosureButton className="group flex w-full items-center justify-between rounded-lg py-2 pr-3.5 pl-3 text-base/7 font-semibold text-gray-900 hover:bg-gray-50">
-                    Product
-                    <ChevronDownIcon
-                      aria-hidden="true"
-                      className="size-5 flex-none group-data-open:rotate-180"
-                    />
-                  </DisclosureButton>
-                  <DisclosurePanel className="mt-2 space-y-2">
-                    {[...products, ...callsToAction].map((item) => (
-                      <DisclosureButton
-                        key={item.name}
-                        as="a"
-                        href={item.href}
-                        className="block rounded-lg py-2 pr-3 pl-6 text-sm/7 font-semibold text-gray-900 hover:bg-gray-50"
-                      >
-                        {item.name}
-                      </DisclosureButton>
-                    ))}
-                  </DisclosurePanel>
-                </Disclosure>
-                <a
-                  href="#"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
+            {/* Mobile menu button */}
+            <div className="flex lg:hidden">
+              <DisclosureButton className="text-zinc-400 hover:text-zinc-300 focus:outline-none focus:text-zinc-300">
+                {open ? (
+                  <XIcon className="w-6 h-6" aria-hidden="true" />
+                ) : (
+                  <MenuIcon className="w-6 h-6" aria-hidden="true" />
+                )}
+              </DisclosureButton>
+            </div>
+
+            {/* Desktop menu */}
+            <div className="hidden lg:flex lg:items-center">
+              {navigation.map((item, idx) => (
+                <NavLink
+                  key={item.name}
+                  to={item.href}
+                  className={({ isActive }) =>
+                    `${baseLinkClasses} ${isActive ? activeLinkClasses : ""}`
+                  }
                 >
-                  Features
-                </a>
-                <a
-                  href="#"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
-                >
-                  Marketplace
-                </a>
-                <a
-                  href="#"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
-                >
-                  Company
-                </a>
-              </div>
-              <div className="py-6">
-                <a
-                  href="#"
-                  className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
-                >
-                  Log in
-                </a>
-              </div>
+                  {item.name}
+                </NavLink>
+              ))}
             </div>
           </div>
-        </DialogPanel>
-      </Dialog>
-    </header>
+
+          {/* Mobile menu panel */}
+          <Transition
+            enter="transition duration-300 ease-out"
+            enterFrom="transform opacity-0 -translate-x-full"
+            enterTo="transform opacity-100 translate-x-0"
+            leave="transition duration-300 ease-in"
+            leaveFrom="transform opacity-100 translate-x-0"
+            leaveTo="transform opacity-0 -translate-x-full"
+          >
+            <DisclosurePanel className="lg:hidden">
+              <div className="px-6 pt-4 pb-4 flex flex-col">
+                {navigation.map((item) => (
+                  <NavLink
+                    key={item.name}
+                    to={item.href}
+                    className={({ isActive }) =>
+                      `${baseLinkClasses} ${isActive ? activeLinkClasses : ""}`
+                    }
+                  >
+                    {item.name}
+                  </NavLink>
+                ))}
+
+                <NavLink
+                  to="/cart"
+                  className="relative inline-block text-zinc-200 transition-colors duration-300 transform hover:text-zinc-100"
+                >
+                  <svg
+                    className="w-5 h-5 inline-block"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M3 3H5L5.4 5M7 13H17L21 5H5.4M7 13L5.4 5M7 13L4.70711 15.2929C4.07714 15.9229 4.52331 17 5.41421 17H17M17 17C15.8954 17 15 17.8954 15 19C15 20.1046 15.8954 21 17 21C18.1046 21 19 20.1046 19 19C19 17.8954 18.1046 17 17 17ZM9 19C9 20.1046 8.10457 21 7 21C5.89543 21 5 20.1046 5 19C5 17.8954 5.89543 17 7 17C8.10457 17 9 17.8954 9 19Z"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                  <span className="absolute top-0 left-0 p-1 text-xs text-zinc-50 bg-zinc-700 rounded-full" />
+                </NavLink>
+              </div>
+            </DisclosurePanel>
+          </Transition>
+        </>
+      )}
+    </Disclosure>
   );
 }
