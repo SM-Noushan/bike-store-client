@@ -17,7 +17,7 @@ interface NavigationItem {
 // Navigation items array (DRY)
 const navigation: NavigationItem[] = [
   { name: "Home", href: "/" },
-  { name: "Products", href: "/products" },
+  { name: "Bikes", href: "/bikes" },
   { name: "About us", href: "/about-us" },
 ];
 
@@ -33,7 +33,7 @@ interface HeaderProps {
   open: boolean;
 }
 const Header: React.FC<HeaderProps> = ({ open }) => (
-  <div className="container max-w-screen-2xl px-4 lg:px-12 py-4 left-1/2 transform -translate-x-1/2 flex items-center justify-between flex-wrap fixed ">
+  <header className="container max-w-screen-2xl px-4 lg:px-12 py-4 left-1/2 transform -translate-x-1/2 flex items-center justify-between flex-wrap fixed ">
     {/* Logo */}
     <NavLink to="/" className="flex items-center">
       <h1 className="font-black text-2xl">BikeStore</h1>
@@ -47,7 +47,7 @@ const Header: React.FC<HeaderProps> = ({ open }) => (
     </div>
 
     {/* Desktop menu */}
-    <div className="hidden md:flex lg:items-center">
+    <menu className="hidden md:flex lg:items-center">
       {navigation.map((item, idx) => (
         <NavLink
           key={item.name}
@@ -65,17 +65,15 @@ const Header: React.FC<HeaderProps> = ({ open }) => (
           <li className="list-none inline-block">{item.name}</li>
         </NavLink>
       ))}
-    </div>
-  </div>
+    </menu>
+  </header>
 );
 
 // -------------------------
 // Mobile Overlay Component
 // -------------------------
 const MobileOverlay: React.FC = () => (
-  <div className="fixed h-screen w-full md:hidden">
-    <div className="bg-zinc-600/60 h-screen w-full" />
-  </div>
+  <div className="bg-zinc-600/60 h-screen w-full fixed md:hidden" />
 );
 
 // -------------------------
@@ -99,7 +97,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ open, close }) => (
       className="md:hidden h-screen fixed w-full"
       onClick={close}
     >
-      <div
+      <header
         onClick={close}
         className="px-6 pt-4 pb-4 flex flex-col bg-zinc-900 h-full w-2/3 relative"
       >
@@ -131,7 +129,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ open, close }) => (
             <li className="list-none">{item.name}</li>
           </NavLink>
         ))}
-      </div>
+      </header>
     </DisclosurePanel>
   </Transition>
 );
