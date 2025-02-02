@@ -57,7 +57,7 @@ const NewsletterSubscription: React.FC = () => {
           id="email"
           type="text"
           value={email}
-          className="sm:w-72"
+          className="sm:w-72 bg-white"
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
             setEmail(e.target.value)
           }

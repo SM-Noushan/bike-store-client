@@ -33,39 +33,43 @@ interface HeaderProps {
   open: boolean;
 }
 const Header: React.FC<HeaderProps> = ({ open }) => (
-  <header className="container max-w-screen-2xl px-4 lg:px-12 py-4 left-1/2 transform -translate-x-1/2 flex items-center justify-between flex-wrap fixed ">
-    {/* Logo */}
-    <NavLink to="/" className="flex items-center">
-      <h1 className="font-black text-2xl">BikeStore</h1>
-    </NavLink>
+  <header className="fixed bg-white w-full z-20">
+    <div className="flex items-center justify-between flex-wrap container max-w-screen-2xl px-4 py-4 lg:px-12">
+      {/* Logo */}
+      <NavLink to="/" className="flex items-center">
+        <h1 className="font-black text-2xl">BikeStore</h1>
+      </NavLink>
 
-    {/* Mobile menu button */}
-    <div className="flex md:hidden">
-      <DisclosureButton className="text-zinc-800 hover:text-zinc-950 focus:outline-none focus:text-zinc-950">
-        {open || <MenuIcon className="w-6 h-6" aria-hidden="true" />}
-      </DisclosureButton>
+      {/* Mobile menu button */}
+      <div className="flex md:hidden">
+        <DisclosureButton className="text-zinc-800 hover:text-zinc-950 focus:outline-none focus:text-zinc-950">
+          {open || <MenuIcon className="w-6 h-6" aria-hidden="true" />}
+        </DisclosureButton>
+      </div>
+
+      {/* Desktop menu */}
+      <menu className="hidden md:flex lg:items-center">
+        {navigation.map((item, idx) => (
+          <NavLink
+            key={item.name}
+            to={item.href}
+            className={({ isActive }) =>
+              `${baseLinkClasses} ${
+                idx !== navigation.length - 1
+                  ? "border-r-2 border-zinc-300"
+                  : ""
+              } ${
+                isActive
+                  ? `${activeLinkClasses} *:border-b-2 *:border-zinc-900`
+                  : "hover:font-medium hover:text-zinc-900 hover:*:border-b-2 hover:*:border-zinc-900"
+              }`
+            }
+          >
+            <li className="list-none inline-block">{item.name}</li>
+          </NavLink>
+        ))}
+      </menu>
     </div>
-
-    {/* Desktop menu */}
-    <menu className="hidden md:flex lg:items-center">
-      {navigation.map((item, idx) => (
-        <NavLink
-          key={item.name}
-          to={item.href}
-          className={({ isActive }) =>
-            `${baseLinkClasses} ${
-              idx !== navigation.length - 1 ? "border-r-2 border-zinc-300" : ""
-            } ${
-              isActive
-                ? `${activeLinkClasses} *:border-b-2 *:border-zinc-900`
-                : "hover:font-medium hover:text-zinc-900 hover:*:border-b-2 hover:*:border-zinc-900"
-            }`
-          }
-        >
-          <li className="list-none inline-block">{item.name}</li>
-        </NavLink>
-      ))}
-    </menu>
   </header>
 );
 
@@ -73,7 +77,7 @@ const Header: React.FC<HeaderProps> = ({ open }) => (
 // Mobile Overlay Component
 // -------------------------
 const MobileOverlay: React.FC = () => (
-  <div className="bg-zinc-600/60 h-screen w-full fixed md:hidden" />
+  <div className="bg-zinc-600/60 h-screen w-full fixed md:hidden z-20" />
 );
 
 // -------------------------
@@ -94,7 +98,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ open, close }) => (
     leaveTo="transform opacity-0 -translate-x-full"
   >
     <DisclosurePanel
-      className="md:hidden h-screen fixed w-full"
+      className="md:hidden h-screen fixed w-full z-20"
       onClick={close}
     >
       <header
@@ -139,7 +143,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ open, close }) => (
 // -------------------------
 const TopNavbar: React.FC = () => {
   return (
-    <Disclosure as="nav" className="">
+    <Disclosure as="nav">
       {({ open, close }) => (
         <>
           <Header open={open} />
