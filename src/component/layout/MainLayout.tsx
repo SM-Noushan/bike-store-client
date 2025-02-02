@@ -5,6 +5,7 @@ import BottomNavbar from "../shared/navbar/BottomNavbar";
 // Import react-slick CSS files
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import FixedIcons from "../shared/fixedSection/FixedIcons";
 
 const MainLayout = () => {
   return (
@@ -12,6 +13,7 @@ const MainLayout = () => {
       <TopNavbar />
       <BottomNavbar />
       <Outlet />
+      <FixedIcons />
     </div>
   );
 };

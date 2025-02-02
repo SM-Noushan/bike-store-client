@@ -1,0 +1,56 @@
+import React from "react";
+import { Link } from "react-router-dom";
+import { User, ShoppingCart } from "lucide-react";
+
+interface FixedIconItem {
+  id: string;
+  route: string;
+  text: string;
+  Icon: React.ElementType;
+  count?: number;
+}
+
+const FixedIcons: React.FC = () => {
+  // Example dynamic products array.
+  const products = [];
+
+  // Define the items with common properties.
+  const items: FixedIconItem[] = [
+    {
+      id: "profile",
+      route: "/signin",
+      text: "Profile",
+      Icon: User,
+    },
+    {
+      id: "cart",
+      route: "/my-cart",
+      text: "Buy Now",
+      Icon: ShoppingCart,
+      count: products.length,
+    },
+  ];
+
+  return (
+    <div className="fixed top-72 right-2 z-20 hidden md:flex flex-col gap-2">
+      {items.map((item) => (
+        <Link key={item.id} to={item.route}>
+          <div className="bg-neutral-100 size-16 rounded-md flex flex-col gap-1 text-[#33475b] justify-center items-center shadow-testShadow overflow-x-hidden group cursor-pointer relative">
+            <div className="flex justify-center items-center">
+              <item.Icon className="text-2xl -translate-x-12 group-hover:translate-x-3 transition-transform duration-200" />
+              <item.Icon className="text-2xl -translate-x-3 group-hover:translate-x-12 transition-transform duration-200" />
+            </div>
+            <p className="text-xs font-semibold">{item.text}</p>
+            {item?.id === "cart" && (
+              <p className="absolute top-1 right-2 bg-neutral-600 text-white text-xs size-4 rounded-full flex items-center justify-center font-semibold">
+                {item.count || 0}
+              </p>
+            )}
+          </div>
+        </Link>
+      ))}
+    </div>
+  );
+};
+
+export default FixedIcons;
