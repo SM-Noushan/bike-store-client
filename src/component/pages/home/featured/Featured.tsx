@@ -3,6 +3,8 @@ import React from "react";
 import Slider from "react-slick";
 import NextArrow from "./NextArrow";
 import PrevArrow from "./PrevArrow";
+import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 // Use the provided image URL for all products.
 const defaultImage =
@@ -113,6 +115,11 @@ const FeaturedBikes: React.FC = () => {
           </div>
         ))}
       </Slider>
+      <div className="text-center">
+        <Link to="/bikes" className="my-4 inline-block">
+          <Button className="px-12">View All</Button>
+        </Link>
+      </div>
     </div>
   );
 };
