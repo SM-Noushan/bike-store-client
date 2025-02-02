@@ -35,7 +35,7 @@ const bannerItems: BannerItem[] = [
 
 const BannerBottom: React.FC = () => {
   return (
-    <div className="w-full bg-neutral-200/65 border-b border-b-gray-400 py-4 px-4 relative -mt-1.5 cursor-default">
+    <div className="w-full bg-neutral-200/65 border-b border-b-gray-400 py-4 relative -mt-1.5 cursor-default">
       <div className="container max-w-screen-2xl px-4 lg:px-12 py-4 mx-auto md:h-20 flex flex-col md:flex-row justify-between items-center">
         {bannerItems.map((item) => (
           <div
