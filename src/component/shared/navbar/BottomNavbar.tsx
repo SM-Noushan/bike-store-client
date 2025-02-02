@@ -61,7 +61,7 @@ export const MyMenubar = ({
   );
 };
 
-const Navbar2 = () => {
+const BottomNavbar = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const navigate = useNavigate();
 
@@ -127,4 +127,4 @@ const Navbar2 = () => {
   );
 };
 
-export default Navbar2;
+export default BottomNavbar;

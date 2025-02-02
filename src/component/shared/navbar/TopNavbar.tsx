@@ -137,7 +137,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ open, close }) => (
 // -------------------------
 // Navbar Component
 // -------------------------
-const Navbar: React.FC = () => {
+const TopNavbar: React.FC = () => {
   return (
     <Disclosure as="nav" className="">
       {({ open, close }) => (
@@ -151,4 +151,4 @@ const Navbar: React.FC = () => {
   );
 };
 
-export default Navbar;
+export default TopNavbar;

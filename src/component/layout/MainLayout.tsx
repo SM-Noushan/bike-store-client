@@ -1,11 +1,16 @@
-import Navbar from "./Navbar";
 import { Outlet } from "react-router-dom";
-import Navbar2 from "./Navbar2";
+import TopNavbar from "../shared/navbar/TopNavbar";
+import BottomNavbar from "../shared/navbar/BottomNavbar";
+
+// Import react-slick CSS files
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+
 const MainLayout = () => {
   return (
     <div className="min-h-screen font-Outfit">
-      <Navbar />
-      <Navbar2 />
+      <TopNavbar />
+      <BottomNavbar />
       <Outlet />
     </div>
   );

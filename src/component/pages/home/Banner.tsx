@@ -8,10 +8,6 @@ import banner4 from "../../../assets/banner/banner4.png";
 import banner5 from "../../../assets/banner/banner5.png";
 import banner6 from "../../../assets/banner/banner6.png";
 
-// Import react-slick CSS files
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-
 interface ImageProps {
   imgSrc: string;
   className?: string;
@@ -34,14 +30,14 @@ const Banner: React.FC = () => {
     beforeChange: (_: number, next: number) => setDotActive(next),
     appendDots: (dots: React.ReactNode) => (
       <div className="relative">
-        <ul className="m-0 flex flex-col absolute translate-y-[-350%]">
+        <ul className="m-0 flex flex-col absolute translate-y-[-170%] md:translate-y-[-250%] lg:translate-y-[-300%] xl:translate-y-[-350%]">
           {dots}
         </ul>
       </div>
     ),
     customPaging: (i: number) => (
       <span
-        className={`w-[45px] block cursor-pointer ${
+        className={`w-[25px] md:w-[45px] block cursor-pointer text-sm md:text-base ${
           i === dotActive
             ? "text-white border-r-[3px] border-r-[#262626]"
             : "text-transparent border-r-[3px] border-r-white"
@@ -50,33 +46,7 @@ const Banner: React.FC = () => {
         0{i + 1}
       </span>
     ),
-    responsive: [
-      {
-        breakpoint: 640,
-        settings: {
-          dots: true,
-          appendDots: (dots: React.ReactNode) => (
-            <div className="relative">
-              <ul className="m-0 flex flex-col absolute translate-y-[-170%]">{dots}</ul>
-            </div>
-          ),
-          customPaging: (i: number) => (
-            <div
-              className={`w-[25px] cursor-pointer text-[12px] ${
-                i === dotActive
-                  ? "text-[#262626] border-r-[3px] border-r-[#262626]"
-                  : "text-transparent border-r-[3px] border-r-white"
-              }`}
-            >
-              0{i + 1}
-            </div>
-          ),
-        },
-      },
-    ],
   };
-
-  // Use the provided image link for the banner images.
 
   return (
     <div className="w-full bg-white relative">
@@ -87,7 +57,7 @@ const Banner: React.FC = () => {
             <Link to="/bikes" key={idx}>
               <div className="">
                 <Image
-                  className="object-cover w-full h-56 md:h-[calc(100dvh-300px)]"
+                  className="object-cover w-full h-56 md:h-[calc(100dvh-400px)] lg:h-[calc(100dvh-260px)]"
                   imgSrc={banner}
                 />
               </div>
