@@ -6,10 +6,11 @@ import {
 } from "react-hook-form";
 import { ZodSchema } from "zod";
 import { ButtonProps } from "@/components/ui/button";
+import { ReactNode } from "react";
 
 interface IBaseFieldConfig {
   name: string;
-  label: string;
+  label?: string | ReactNode;
   placeholder?: string;
   description?: string;
 }
@@ -72,4 +73,8 @@ export type TFormWrapperProps<T extends FieldValues> =
 export type TFormFields = {
   methods: UseFormReturn<any>;
   fields: TFieldConfig[];
+};
+
+export type TFormMethod = {
+  formMethods: UseFormReturn<any>;
 };

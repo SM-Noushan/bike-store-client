@@ -13,6 +13,7 @@ import { Input } from "@/components/ui/input";
 import SelectDropdown from "./SelectDropdown";
 import FormRadioGroup from "./FormRadioGroup";
 import PriceRangeInput from "./PriceRangeInput";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 const FormFields = ({ methods, fields }: TFormFields) => (
   <div className="space-y-6">
@@ -24,7 +25,7 @@ const FormFields = ({ methods, fields }: TFormFields) => (
         render={({ field: controllerField }) => (
           <FormItem>
             <FormLabel>
-              {field.label}{" "}
+              <h1 className="lg:text-xl font-semibold">{field.label}</h1>
               {field.description && (
                 <Badge variant="outline" className="ml-2 text-gray-500">
                   Optional
@@ -74,11 +75,13 @@ const FormFields = ({ methods, fields }: TFormFields) => (
                     ) : null,
                   "checkbox-group":
                     "options" in field ? (
-                      <CheckboxGroup
-                        name={field.name}
-                        options={field.options}
-                        control={methods.control}
-                      />
+                      <ScrollArea className="max-h-40 overflow-auto border-r-2 hide-scrollbar">
+                        <CheckboxGroup
+                          name={field.name}
+                          options={field.options}
+                          control={methods.control}
+                        />
+                      </ScrollArea>
                     ) : null,
                   radio:
                     "options" in field ? (
