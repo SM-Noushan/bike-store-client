@@ -5,6 +5,7 @@ import MyCart from "@/pages/public/MyCart";
 import AboutUs from "@/pages/public/AboutUs";
 import Error404 from "@/pages/public/Error404";
 import { createBrowserRouter } from "react-router-dom";
+import Bike from "@/pages/public/Bike";
 
 const router = createBrowserRouter([
   {
@@ -19,6 +20,10 @@ const router = createBrowserRouter([
       {
         path: "bikes",
         element: <Bikes />,
+      },
+      {
+        path: "bike/:id",
+        element: <Bike />,
       },
       {
         path: "about-us",
