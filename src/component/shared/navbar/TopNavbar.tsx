@@ -34,7 +34,7 @@ interface HeaderProps {
 }
 const Header: React.FC<HeaderProps> = ({ open }) => (
   <header className="fixed bg-white w-full z-20">
-    <div className="flex items-center justify-between flex-wrap container max-w-screen-2xl px-4 py-4 lg:px-12">
+    <div className="flex items-center justify-between flex-wrap main-wrapper">
       {/* Logo */}
       <NavLink to="/" className="flex items-center">
         <h1 className="font-black text-2xl">BikeStore</h1>

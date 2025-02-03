@@ -6,7 +6,7 @@ import Breadcrumbs from "@/component/shared/breadcrumbs/Breadcrumbs";
 const AboutUs: React.FC = () => {
   const textClasses = "max-w-[600px] text-base font-light text-justify";
   return (
-    <div className="container max-w-screen-2xl px-4 py-4 lg:px-12">
+    <div className="main-wrapper">
       <Breadcrumbs
         title="About"
         prevLocation="Home"

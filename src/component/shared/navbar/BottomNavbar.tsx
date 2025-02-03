@@ -75,7 +75,7 @@ const BottomNavbar = () => {
   return (
     <section className="pt-16">
       <div className="bg-neutral-200/65">
-        <div className="container max-w-screen-2xl px-4 lg:px-12 py-4 flex justify-between items-center mx-auto flex-wrap gap-y-4">
+        <div className="main-wrapper flex justify-between items-center flex-wrap gap-y-4">
           <MyMenubar
             categories={bikeCategories}
             label={
