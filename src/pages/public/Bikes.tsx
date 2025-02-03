@@ -2,6 +2,7 @@
 // import ProductBanner from "../../components/pageProps/shopPage/ProductBanner";
 // import ShopSideNav from "../../components/pageProps/shopPage/ShopSideNav";
 
+import BikeGallery from "@/component/pages/bikes/BikesGallery";
 import SideFilter from "@/component/pages/bikes/SideFilters";
 import Breadcrumbs from "@/component/shared/breadcrumbs/Breadcrumbs";
 import { Button } from "@/components/ui/button";
@@ -35,9 +36,7 @@ const Bikes = () => {
           </DrawerContent>
         </Drawer>
         <div className="w-full md:w-[80%] lg:w-[75%] h-full flex flex-col gap-10">
-          products
-          {/* <ProductBanner itemsPerPageFromBanner={itemsPerPageFromBanner} />
-          <Pagination itemsPerPage={itemsPerPage} /> */}
+          <BikeGallery itemsPerPage={6} />
         </div>
       </div>
       {/* ================= Products End here ===================== */}
