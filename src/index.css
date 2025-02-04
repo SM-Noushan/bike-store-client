@@ -72,3 +72,8 @@
     scrollbar-color: rgba(115, 115, 115, 0.5) rgba(229, 229, 229, 0.4);
   }
 }
+
+.thin-scrollbar::-webkit-scrollbar {
+  width: 2.5px;
+  height: 0;
+}
