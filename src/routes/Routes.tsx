@@ -1,13 +1,14 @@
 import App from "../App";
 import Home from "@/pages/public/Home";
+import Bike from "@/pages/public/Bike";
 import Bikes from "@/pages/public/Bikes";
+import Profile from "@/pages/user/Profile";
+import MyOrders from "@/pages/user/Orders";
 import MyCart from "@/pages/public/MyCart";
 import AboutUs from "@/pages/public/AboutUs";
 import Error404 from "@/pages/public/Error404";
 import { createBrowserRouter } from "react-router-dom";
-import Bike from "@/pages/public/Bike";
 import Dashboard from "@/component/layout/Sidebar/SidebarLayout";
-import Profile from "@/pages/user/Profile";
 
 const router = createBrowserRouter([
   {
@@ -45,7 +46,10 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <Profile />,
-      },
+      },{
+        path: "my-orders",
+        element: <MyOrders />,
+      }
     ],
   },
 ]);

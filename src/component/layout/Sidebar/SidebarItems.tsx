@@ -14,7 +14,6 @@ import {
 import { Button } from "@/components/ui/button";
 import { Link, NavLink } from "react-router-dom";
 
-// This is sample data.
 const data = [
   {
     title: "Profile",
@@ -22,13 +21,14 @@ const data = [
   },
   {
     title: "Orders",
-    url: "/dashboard/orders",
+    url: "/dashboard/my-orders",
   },
 ];
 
 export function SidebarItems({
   ...props
 }: React.ComponentProps<typeof Sidebar>) {
+  const items = data;
   return (
     <Sidebar {...props}>
       <SidebarHeader className="text-2xl font-bold px-3">
@@ -38,9 +38,9 @@ export function SidebarItems({
         <SidebarGroup>
           <SidebarMenu className="gap-2">
             <SidebarMenuItem>
-              {data?.length ? (
+              {items?.length ? (
                 <SidebarMenuSub className="ml-0 border-l-0 px-1.5">
-                  {data.map((item) => (
+                  {items.map((item) => (
                     <SidebarMenuSubItem key={item.title}>
                       <div className="w-full">
                         <NavLink
