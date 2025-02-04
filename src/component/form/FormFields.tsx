@@ -13,6 +13,7 @@ import { Input } from "@/components/ui/input";
 import SelectDropdown from "./SelectDropdown";
 import FormRadioGroup from "./FormRadioGroup";
 import PriceRangeInput from "./PriceRangeInput";
+import { Textarea } from "@/components/ui/textarea";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
 const FormFields = ({ methods, fields }: TFormFields) => (
@@ -25,7 +26,7 @@ const FormFields = ({ methods, fields }: TFormFields) => (
         render={({ field: controllerField }) => (
           <FormItem>
             <FormLabel>
-              <h1 className="lg:text-xl font-semibold">{field.label}</h1>
+              <h1 className="lg:text-base font-semibold">{field.label}</h1>
               {field.description && (
                 <Badge variant="outline" className="ml-2 text-gray-500">
                   Optional
@@ -46,6 +47,20 @@ const FormFields = ({ methods, fields }: TFormFields) => (
                     <Input
                       type="email"
                       placeholder={field.placeholder}
+                      {...controllerField}
+                    />
+                  ),
+                  number: (
+                    <Input
+                      type="number"
+                      placeholder={field.placeholder}
+                      {...controllerField}
+                    />
+                  ),
+                  textarea: (
+                    <Textarea
+                      placeholder={field.placeholder}
+                      className="resize-none min-h-28"
                       {...controllerField}
                     />
                   ),

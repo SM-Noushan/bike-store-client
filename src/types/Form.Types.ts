@@ -16,7 +16,7 @@ interface IBaseFieldConfig {
 }
 
 interface IInput {
-  type: "text" | "email" | "password";
+  type: "text" | "email" | "password" | 'number' | 'textarea';
 }
 
 interface IPriceRange {

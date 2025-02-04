@@ -1,24 +1,13 @@
 import * as React from "react";
-import { ChevronRight } from "lucide-react";
-
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
 import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
   SidebarGroup,
-  SidebarGroupContent,
-  SidebarGroupLabel,
   SidebarHeader,
   SidebarMenu,
-  SidebarMenuButton,
   SidebarMenuItem,
   SidebarMenuSub,
-  SidebarMenuSubButton,
   SidebarMenuSubItem,
   SidebarRail,
 } from "@/components/ui/sidebar";
@@ -53,11 +42,11 @@ export function SidebarItems({
                 <SidebarMenuSub className="ml-0 border-l-0 px-1.5">
                   {data.map((item) => (
                     <SidebarMenuSubItem key={item.title}>
-                      <SidebarMenuSubButton>
+                      <div className="w-full">
                         <NavLink
                           to={item.url}
                           className={({ isActive }) =>
-                            `w-full bg-neutral-200 font-semibold ${
+                            `w-full inline-block bg-neutral-200 font-semibold ${
                               isActive
                                 ? `bg-opacity-55`
                                 : "bg-opacity-0 hover:bg-opacity-55"
@@ -66,7 +55,7 @@ export function SidebarItems({
                         >
                           {item.title}
                         </NavLink>
-                      </SidebarMenuSubButton>
+                      </div>
                     </SidebarMenuSubItem>
                   ))}
                 </SidebarMenuSub>
