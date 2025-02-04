@@ -6,3 +6,7 @@ export interface ICommonModalProps {
 export interface IModalPropsWithStringValue extends ICommonModalProps {
   initialValue: string;
 }
+
+export interface IAuthModalProps extends ICommonModalProps {
+  initialTab: "login" | "register";
+}

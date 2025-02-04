@@ -1,20 +1,18 @@
+import { loadState, saveState } from "@/utils";
+import { baseApi } from "./api/baseApi";
+import { authSlice } from "./features/api/authSlice";
 import { setupListeners } from "@reduxjs/toolkit/query";
 import { combineSlices, configureStore } from "@reduxjs/toolkit";
 
-// `combineSlices` automatically combines the reducers using
-// their `reducerPath`s, therefore we no longer need to call `combineReducers`.
-const rootReducer = combineSlices();
+const rootReducer = combineSlices(baseApi, authSlice);
 
-// Infer the `RootState` type from the root reducer
 export type RootState = ReturnType<typeof rootReducer>;
 
-// The store setup is wrapped in `makeStore` to allow reuse
-// when setting up tests that need the same store config
 export const makeStore = (preloadedState?: Partial<RootState>) => {
   const store = configureStore({
     reducer: rootReducer,
     middleware: (getDefaultMiddleware) => {
-      return getDefaultMiddleware().concat();
+      return getDefaultMiddleware().concat(baseApi.middleware);
     },
     preloadedState,
   });
@@ -22,9 +20,13 @@ export const makeStore = (preloadedState?: Partial<RootState>) => {
   return store;
 };
 
-export const store = makeStore();
+export const store = makeStore(loadState(["auth"]));
 
-// Infer the type of `store`
+store.subscribe(() => {
+  saveState({
+    auth: store.getState().auth,
+  });
+});
+
 export type AppStore = typeof store;
-// Infer the `AppDispatch` type from the store itself
 export type AppDispatch = AppStore["dispatch"];

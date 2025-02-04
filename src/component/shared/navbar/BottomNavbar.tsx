@@ -1,67 +1,40 @@
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import {
-  Menubar,
-  MenubarContent,
-  MenubarItem,
-  MenubarMenu,
-  MenubarShortcut,
-  MenubarTrigger,
-} from "@/components/ui/menubar";
 import {
   ChevronDown,
   Search,
   ShoppingCart,
   UserCircleIcon,
 } from "lucide-react";
-import { ReactNode } from "react";
+import { useState } from "react";
+import MyMenubar from "./MyMenubar";
+import { useAppSelector } from "@/app/hook";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import { Link, useNavigate } from "react-router-dom";
+import { MenubarShortcut } from "@/components/ui/menubar";
+import { selectCurrentUser } from "@/app/features/api/authSlice";
 
 const bikeCategories = [
-  { name: "Mountain Bikes", href: "/bikes?category=mountain" },
-  { name: "Road Bikes", href: "/bikes?category=road" },
-  { name: "Hybrid Bikes", href: "/bikes?category=hybrid" },
-  { name: "Electric Bikes", href: "/bikes?category=electric" },
-  { name: "BMX Bikes", href: "/bikes?category=bmx" },
-  { name: "Gravel Bikes", href: "/bikes?category=gravel" },
-  { name: "Touring Bikes", href: "/bikes?category=touring" },
+  { name: "Mountain Bikes", to: "/bikes?category=mountain" },
+  { name: "Road Bikes", to: "/bikes?category=road" },
+  { name: "Hybrid Bikes", to: "/bikes?category=hybrid" },
+  { name: "Electric Bikes", to: "/bikes?category=electric" },
+  { name: "BMX Bikes", to: "/bikes?category=bmx" },
+  { name: "Gravel Bikes", to: "/bikes?category=gravel" },
+  { name: "Touring Bikes", to: "/bikes?category=touring" },
 ];
 
-const publicUserCategories = [
-  { name: "Login", href: "/login" },
-  { name: "Register", href: "/register" },
+const unsignedUserOptions = [
+  { name: "Login", to: "login" },
+  { name: "Register", to: "register" },
 ];
 
-export const MyMenubar = ({
-  categories,
-  label,
-}: {
-  label: ReactNode;
-  categories: { name: string; href: string }[];
-}) => {
-  return (
-    <Menubar className="bg-neutral shadow-none border-none p-0">
-      <MenubarMenu>
-        <MenubarTrigger className="cursor-pointer px-0">{label}</MenubarTrigger>
-        <MenubarContent className="bg-zinc-950 text-white px-6 py-2">
-          {categories.map((category, index) => (
-            <MenubarItem key={index} className="p-0">
-              <Link
-                to={category.href}
-                className="text-white/60 hover:text-white hover:bg-zinc-950 w-full p-2 border-b border-b-white/60 hover:border-b-white"
-              >
-                {category.name}
-              </Link>
-            </MenubarItem>
-          ))}
-        </MenubarContent>
-      </MenubarMenu>
-    </Menubar>
-  );
-};
+const signedInUserOptions = [
+  { name: "Dashboard", to: "/dashboard" },
+  { name: "Logout", to: "logout" },
+];
 
 const BottomNavbar = () => {
+  const currentUser = useAppSelector(selectCurrentUser);
   const [searchQuery, setSearchQuery] = useState("");
   const navigate = useNavigate();
 
@@ -77,7 +50,7 @@ const BottomNavbar = () => {
       <div className="bg-neutral-200/65">
         <div className="main-wrapper flex justify-between items-center flex-wrap gap-y-4">
           <MyMenubar
-            categories={bikeCategories}
+            navItems={bikeCategories}
             label={
               <>
                 <MenubarShortcut className="mr-1 mt-0.5">⌘</MenubarShortcut>
@@ -104,7 +77,8 @@ const BottomNavbar = () => {
           </div>
           <div className="flex items-center mr-6 gap-x-2 order-2 md:order-3">
             <MyMenubar
-              categories={publicUserCategories}
+              button={currentUser ? "hybrid" : true}
+              navItems={currentUser ? signedInUserOptions : unsignedUserOptions}
               label={
                 <>
                   <UserCircleIcon size={20} />

@@ -7,6 +7,7 @@ import {
 import { ZodSchema } from "zod";
 import { ButtonProps } from "@/components/ui/button";
 import { ReactNode } from "react";
+import { TResponseError } from "./Global.Types";
 
 interface IBaseFieldConfig {
   name: string;
@@ -16,7 +17,7 @@ interface IBaseFieldConfig {
 }
 
 interface IInput {
-  type: "text" | "email" | "password" | 'number' | 'textarea';
+  type: "text" | "email" | "password" | "number" | "textarea";
 }
 
 interface IPriceRange {
@@ -66,9 +67,11 @@ type TMultiFormProps<T extends FieldValues> = {
   onSubmit?: never;
 } & TCommonFormProps<T>;
 
-export type TFormWrapperProps<T extends FieldValues> =
+export type TFormWrapperProps<T extends FieldValues> = (
   | TSingleFormProps<T>
-  | TMultiFormProps<T>;
+  | TMultiFormProps<T>
+) &
+  TResponseError;
 
 export type TFormFields = {
   methods: UseFormReturn<any>;

@@ -7,16 +7,8 @@ import {
   DialogTrigger,
   DialogClose,
 } from "@/components/ui/dialog";
+import { ModalProps } from "@/types";
 import { Button } from "@/components/ui/button";
-
-interface ModalProps {
-  children: React.ReactNode;
-  open: boolean;
-  title: string;
-  onClose: (value: boolean) => void;
-  onSave: () => void;
-  onSaveLabel?: string;
-}
 
 const Modal: FC<ModalProps> = ({
   children,
@@ -25,6 +17,7 @@ const Modal: FC<ModalProps> = ({
   onClose,
   onSave,
   onSaveLabel = "Save",
+  disabled = false,
 }) => {
   return (
     <Dialog open={open} onOpenChange={onClose}>
@@ -40,10 +33,16 @@ const Modal: FC<ModalProps> = ({
           {children}
 
           <div className="flex justify-end gap-2 mt-4">
-            <Button variant="outline" onClick={() => onClose(false)}>
+            <Button
+              variant="outline"
+              onClick={() => onClose(false)}
+              disabled={disabled}
+            >
               Cancel
             </Button>
-            <Button onClick={() => onSave()}>{onSaveLabel}</Button>
+            <Button onClick={() => onSave()} disabled={disabled}>
+              {onSaveLabel}
+            </Button>
           </div>
         </div>
       </DialogContent>

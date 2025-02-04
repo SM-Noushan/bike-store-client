@@ -13,10 +13,10 @@ const baseQuery = fetchBaseQuery({
   baseUrl: BaseApiUrl,
   credentials: "include",
   prepareHeaders: (headers, { getState }) => {
-    // const token = (getState() as RootState).auth.token;
-    // if (token) {
-    //   headers.set("authorization", `Bearer ${token}`);
-    // }
+    const token = (getState() as RootState)?.auth?.token;
+    if (token) {
+      headers.set("authorization", `Bearer ${token}`);
+    }
     return headers;
   },
 });
