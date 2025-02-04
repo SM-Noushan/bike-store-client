@@ -75,7 +75,7 @@ const FormFields = ({ methods, fields }: TFormFields) => (
                     ) : null,
                   "checkbox-group":
                     "options" in field ? (
-                      <ScrollArea className="max-h-40 overflow-auto border-r-2 hide-scrollbar">
+                      <ScrollArea className="max-h-40 overflow-auto border-r-2 thin-scrollbar">
                         <CheckboxGroup
                           name={field.name}
                           options={field.options}
