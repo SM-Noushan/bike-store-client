@@ -11,7 +11,7 @@ import Modal from "@/component/modal/Modal";
 import { changePasswordSchema } from "@/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import FormWrapper from "@/component/form/FormWrapper";
-import { useChangePasswordMutation } from "@/app/features/user/userApi";
+import { useChangePasswordMutation } from "@/app/features/api/authApi";
 
 // Field configuration for the FormWrapper
 const fields: TFieldConfig[] = [

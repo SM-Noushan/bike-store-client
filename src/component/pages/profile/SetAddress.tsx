@@ -4,7 +4,13 @@ import { useForm } from "react-hook-form";
 import Modal from "@/component/modal/Modal";
 import FormWrapper from "@/component/form/FormWrapper";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { IModalPropsWithStringValue, TFieldConfig } from "@/types";
+import {
+  IModalPropsWithStringValue,
+  TCustomError,
+  TFieldConfig,
+} from "@/types";
+import { useSetDeliveryAddressMutation } from "@/app/features/user/userApi";
+import { toast } from "sonner";
 
 const schema = z.object({
   deliveryAddress: z.string().min(5, "Address must be at least 5 characters"),
@@ -27,15 +33,24 @@ const SetAddress: FC<IModalPropsWithStringValue> = ({
   initialValue,
   setOpen,
 }) => {
+  const [setDeliverAddress, { error, isLoading }] =
+    useSetDeliveryAddressMutation();
   const formMethods = useForm<FormValues>({
     resolver: zodResolver(schema),
     defaultValues: { deliveryAddress: initialValue },
   });
 
-  const onSubmit = (data: FormValues) => {
-    console.log("data", data);
-    formMethods.reset();
-    setOpen(false);
+  const onSubmit = async (data: FormValues) => {
+    // console.log("data", data);
+    const toastId = toast.loading("Updating address...");
+    try {
+      await setDeliverAddress(data).unwrap();
+      toast.success("Delivery address updated successfully", { id: toastId });
+      formMethods.reset();
+      setOpen(false);
+    } catch (error) {
+      toast.error((error as TCustomError)?.data?.message, { id: toastId });
+    }
   };
 
   return (
@@ -45,8 +60,9 @@ const SetAddress: FC<IModalPropsWithStringValue> = ({
       onClose={setOpen}
       onSave={formMethods.handleSubmit(onSubmit)}
       onSaveLabel={initialValue ? "Update" : "Save"}
+      disabled={isLoading}
     >
-      <FormWrapper fields={fields} formMethods={formMethods} />
+      <FormWrapper fields={fields} formMethods={formMethods} error={error} />
     </Modal>
   );
 };
