@@ -1,8 +1,9 @@
 import {
-  ChevronDown,
+  User2,
   Search,
+  UserCheck2,
+  ChevronDown,
   ShoppingCart,
-  UserCircleIcon,
 } from "lucide-react";
 import { useState } from "react";
 import MyMenubar from "./MyMenubar";
@@ -81,7 +82,7 @@ const BottomNavbar = () => {
               navItems={currentUser ? signedInUserOptions : unsignedUserOptions}
               label={
                 <>
-                  <UserCircleIcon size={20} />
+                  {currentUser ? <UserCheck2 /> : <User2 />}
                   <MenubarShortcut className="mr-1 mt-0.5">
                     <ChevronDown size={16} />
                   </MenubarShortcut>

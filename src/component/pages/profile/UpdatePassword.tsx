@@ -1,28 +1,17 @@
-import { z } from "zod";
+import {
+  ICommonModalProps,
+  TChangePasswordFormValues,
+  TCustomError,
+  TFieldConfig,
+} from "@/types";
 import { FC } from "react";
+import { toast } from "sonner";
 import { useForm } from "react-hook-form";
 import Modal from "@/component/modal/Modal";
+import { changePasswordSchema } from "@/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import FormWrapper from "@/component/form/FormWrapper";
-import { ICommonModalProps, TFieldConfig } from "@/types";
-
-const commonPasswordSchema = z
-  .string()
-  .min(6, "Password must be at least 6 characters");
-
-const schema = z
-  .object({
-    currentPassword: commonPasswordSchema,
-    newPassword: commonPasswordSchema,
-    confirmPassword: commonPasswordSchema,
-  })
-  .refine((data) => data.newPassword === data.confirmPassword, {
-    message: "Passwords do not match",
-    path: ["confirmPassword"],
-  });
-
-// Infer the form values type from the schema
-type FormValues = z.infer<typeof schema>;
+import { useChangePasswordMutation } from "@/app/features/user/userApi";
 
 // Field configuration for the FormWrapper
 const fields: TFieldConfig[] = [
@@ -44,14 +33,22 @@ const fields: TFieldConfig[] = [
 ];
 
 const UpdatePassword: FC<ICommonModalProps> = ({ open, setOpen }) => {
-  const formMethods = useForm<FormValues>({
-    resolver: zodResolver(schema),
+  const [changePassword, { error, isLoading }] = useChangePasswordMutation();
+  const formMethods = useForm<TChangePasswordFormValues>({
+    resolver: zodResolver(changePasswordSchema),
   });
 
-  const onSubmit = (data: FormValues) => {
-    console.log("data", data);
-    // formMethods.reset();
-    // setOpen(false);
+  const onSubmit = async (data: TChangePasswordFormValues) => {
+    // console.log("data", data);
+    const toastId = toast.loading("Updating password...");
+    try {
+      await changePassword(data).unwrap();
+      toast.success("Password updated successfully", { id: toastId });
+      formMethods.reset();
+      setOpen(false);
+    } catch (error) {
+      toast.error((error as TCustomError)?.data?.message, { id: toastId });
+    }
   };
 
   return (
@@ -61,8 +58,9 @@ const UpdatePassword: FC<ICommonModalProps> = ({ open, setOpen }) => {
       onClose={setOpen}
       onSave={formMethods.handleSubmit(onSubmit)}
       onSaveLabel="Update"
+      disabled={isLoading}
     >
-      <FormWrapper fields={fields} formMethods={formMethods} />
+      <FormWrapper fields={fields} formMethods={formMethods} error={error} />
     </Modal>
   );
 };

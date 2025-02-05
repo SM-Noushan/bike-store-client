@@ -1,3 +1,4 @@
+import { toast } from "sonner";
 import { TNavbar } from "@/types";
 import {
   Menubar,
@@ -32,7 +33,10 @@ const MyMenubar: FC<TNavbar> = ({ navItems, label, button = false }) => {
                     button === "hybrid" ? (
                       navItem.name === "Logout" ? (
                         <button
-                          onClick={() => dispatch(logout())}
+                          onClick={() => {
+                            dispatch(logout());
+                            toast.success("Logged out successful");
+                          }}
                           className={navItemCss}
                         >
                           {navItem.name}

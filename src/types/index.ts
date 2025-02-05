@@ -5,3 +5,4 @@ export * from "./Modals.Types";
 export * from "./Global.Types";
 export * from "./Global.Types";
 export * from "./Navbar.Types";
+export * from "./Profile.Types";
