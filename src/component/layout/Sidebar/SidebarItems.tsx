@@ -4,67 +4,93 @@ import {
   SidebarContent,
   SidebarFooter,
   SidebarGroup,
+  SidebarGroupContent,
+  SidebarGroupLabel,
   SidebarHeader,
   SidebarMenu,
+  SidebarMenuButton,
   SidebarMenuItem,
-  SidebarMenuSub,
-  SidebarMenuSubItem,
-  SidebarRail,
 } from "@/components/ui/sidebar";
+import { useAppSelector } from "@/app/hook";
 import { Button } from "@/components/ui/button";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
+import { selectCurrentUser } from "@/app/features/api/authSlice";
 
-const data = [
+const customerItems = [
   {
-    title: "Profile",
-    url: "/dashboard",
+    title: "",
+    items: [
+      {
+        title: "Profile",
+        url: "/dashboard",
+      },
+      {
+        title: "Orders",
+        url: "/dashboard/my-orders",
+      },
+    ],
+  },
+];
+
+const adminItems = [
+  {
+    title: "User",
+    items: [
+      {
+        title: "Profile",
+        url: "/dashboard",
+      },
+    ],
   },
   {
-    title: "Orders",
-    url: "/dashboard/my-orders",
+    title: "Management",
+    items: [
+      {
+        title: "Users",
+        url: "/dashboard/users",
+      },
+      {
+        title: "Bikes",
+        url: "/dashboard/bikes",
+      },
+      {
+        title: "Orders",
+        url: "/dashboard/orders",
+      },
+    ],
   },
 ];
 
 export function SidebarItems({
   ...props
 }: React.ComponentProps<typeof Sidebar>) {
-  const items = data;
+  const currentUser = useAppSelector(selectCurrentUser);
+  const items = currentUser?.role === "admin" ? adminItems : customerItems;
+
+  const { pathname } = useLocation();
   return (
-    <Sidebar {...props}>
-      <SidebarHeader className="text-2xl font-bold px-3">
+    <Sidebar {...props} variant="floating">
+      <SidebarHeader className="text-2xl font-extrabold px-3">
         <Link to="/">BikeStore</Link>
       </SidebarHeader>
       <SidebarContent>
-        <SidebarGroup>
-          <SidebarMenu className="gap-2">
-            <SidebarMenuItem>
-              {items?.length ? (
-                <SidebarMenuSub className="ml-0 border-l-0 px-1.5">
-                  {items.map((item) => (
-                    <SidebarMenuSubItem key={item.title}>
-                      <div className="w-full">
-                        <NavLink
-                          to={item.url}
-                          className={({ isActive }) =>
-                            `w-full inline-block bg-neutral-200 font-semibold ${
-                              isActive
-                                ? `bg-opacity-55`
-                                : "bg-opacity-0 hover:bg-opacity-55"
-                            }`
-                          }
-                        >
-                          {item.title}
-                        </NavLink>
-                      </div>
-                    </SidebarMenuSubItem>
-                  ))}
-                </SidebarMenuSub>
-              ) : null}
-            </SidebarMenuItem>
-          </SidebarMenu>
-        </SidebarGroup>
+        {items.map((sidebarItem) => (
+          <SidebarGroup key={sidebarItem.title}>
+            <SidebarGroupLabel>{sidebarItem.title}</SidebarGroupLabel>
+            <SidebarGroupContent>
+              <SidebarMenu>
+                {sidebarItem.items.map((item) => (
+                  <SidebarMenuItem key={item.title}>
+                    <SidebarMenuButton isActive={pathname === item.url} asChild>
+                      <NavLink to={item.url}>{item.title}</NavLink>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                ))}
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        ))}
       </SidebarContent>
-      <SidebarRail />
       <SidebarFooter>
         <Button>Logout</Button>
       </SidebarFooter>

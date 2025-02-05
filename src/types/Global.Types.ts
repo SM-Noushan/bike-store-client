@@ -1,3 +1,4 @@
+import { USER_ROLE } from "@/constants/Constant";
 import { SerializedError } from "@reduxjs/toolkit";
 import { BaseQueryApi, DefinitionType } from "@reduxjs/toolkit/query";
 
@@ -37,3 +38,5 @@ export type TResponseRedux<T> = TResponse<T> & BaseQueryApi;
 export type TResponseError = {
   error: DefinitionType | SerializedError | TCustomError | undefined;
 };
+
+export type TUserRole = keyof typeof USER_ROLE;

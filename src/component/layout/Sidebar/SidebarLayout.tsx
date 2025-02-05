@@ -1,22 +1,13 @@
-// import { AppSidebar } from "@/components/app-sidebar";
-// import {
-//   Breadcrumb,
-//   BreadcrumbItem,
-//   BreadcrumbLink,
-//   BreadcrumbList,
-//   BreadcrumbPage,
-//   BreadcrumbSeparator,
-// } from "@/components/ui/breadcrumb";
-import { Separator } from "@/components/ui/separator";
 import {
   SidebarInset,
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
-import { SidebarItems } from "./SidebarItems";
 import { Outlet } from "react-router-dom";
+import { SidebarItems } from "./SidebarItems";
+import { Separator } from "@/components/ui/separator";
 
-export default function Dashboard() {
+export default function MySidebar() {
   return (
     <SidebarProvider>
       <SidebarItems />
