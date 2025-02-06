@@ -23,7 +23,6 @@ const BikeGallery = () => {
   const startIndex = total === 0 ? 0 : (page - 1) * limit + 1;
   const endIndex = limit === 0 ? total : Math.min(page * limit, total);
   const onPageChange = (value: number) => {
-    console.log("onPageChange", value);
     setPage(page);
     setParams([
       ...params.filter((param) => param.key !== "page"),
