@@ -11,3 +11,7 @@ export const changePasswordSchema = z
     message: "Passwords do not match",
     path: ["confirmPassword"],
   });
+
+export const deliverAddressSchema = z.object({
+  deliveryAddress: z.string().min(10, "Address must be at least 10 characters"),
+});

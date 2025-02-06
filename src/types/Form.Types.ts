@@ -81,3 +81,10 @@ export type TFormFields = {
 export type TFormMethod = {
   formMethods: UseFormReturn<any>;
 };
+
+// InputsWithoutForm
+export type TSelectInput = {
+  onValueChange: (value: string) => void;
+  options: { label: string; value: string }[];
+  placeholder?: string;
+};

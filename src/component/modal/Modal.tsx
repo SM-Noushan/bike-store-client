@@ -30,7 +30,12 @@ const Modal: FC<ModalProps> = ({
           <DialogClose onClick={() => onClose(false)} />
         </DialogHeader>
         <div className="p-4">
-          {children}
+          {children || (
+            <h1 className="text-neutral-400">
+              Are you sure you want to continue the action? You can not reverse
+              it.
+            </h1>
+          )}
 
           <div className="flex justify-end gap-2 mt-4">
             <Button

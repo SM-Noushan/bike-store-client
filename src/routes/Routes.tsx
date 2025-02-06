@@ -8,8 +8,11 @@ import MyCart from "@/pages/public/MyCart";
 import AboutUs from "@/pages/public/AboutUs";
 import Error404 from "@/pages/public/Error404";
 import { USER_ROLE } from "@/constants/Constant";
+import ManageUsers from "@/pages/admin/ManageUsers";
+import ManageBikes from "@/pages/admin/ManageBikes";
 import Dashboard from "@/component/layout/Dashboard";
 import { createBrowserRouter } from "react-router-dom";
+import { ManageOrders } from "@/pages/admin/ManageOrders";
 
 const router = createBrowserRouter([
   // Public Routes
@@ -26,31 +29,30 @@ const router = createBrowserRouter([
     ],
   },
 
-  // Dashboard
+  // Protected Routes
+  // Shared Routes
   {
     path: "/dashboard",
     element: <Dashboard />,
     errorElement: <Error404 />,
+    children: [{ index: true, element: <Profile /> }],
+  },
+  // Customer Routes
+  {
+    path: "/dashboard",
+    element: <Dashboard role={[USER_ROLE.customer]} />,
+    errorElement: <Error404 />,
+    children: [{ path: "my-orders", element: <MyOrders /> }],
+  },
+  // Admin Routes
+  {
+    path: "/dashboard",
+    element: <Dashboard role={[USER_ROLE.admin]} />,
+    errorElement: <Error404 />,
     children: [
-      { index: true, element: <Profile /> },
-
-      // Customer Routes
-      {
-        path: "my-orders",
-        element: <Dashboard role={[USER_ROLE.customer]} />,
-        children: [{ index: true, element: <MyOrders /> }],
-      },
-
-      // Admin Routes
-      {
-        path: "",
-        element: <Dashboard role={[USER_ROLE.admin]} />,
-        children: [
-          { path: "users", element: "<Profile />" },
-          { path: "bikes", element: "<Bikes />" },
-          { path: "orders", element: "<Orders />" },
-        ],
-      },
+      { path: "users", element: <ManageUsers /> },
+      { path: "bikes", element: <ManageBikes /> },
+      { path: "orders", element: <ManageOrders /> },
     ],
   },
 ]);

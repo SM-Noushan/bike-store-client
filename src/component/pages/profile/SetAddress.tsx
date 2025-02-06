@@ -1,23 +1,17 @@
-import { z } from "zod";
+import {
+  TFieldConfig,
+  TCustomError,
+  TSetAddressFormValues,
+  IModalPropsWithStringValue,
+} from "@/types";
 import { FC } from "react";
+import { toast } from "sonner";
 import { useForm } from "react-hook-form";
 import Modal from "@/component/modal/Modal";
+import { deliverAddressSchema } from "@/schema";
 import FormWrapper from "@/component/form/FormWrapper";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  IModalPropsWithStringValue,
-  TCustomError,
-  TFieldConfig,
-} from "@/types";
 import { useSetDeliveryAddressMutation } from "@/app/features/user/userApi";
-import { toast } from "sonner";
-
-const schema = z.object({
-  deliveryAddress: z.string().min(5, "Address must be at least 5 characters"),
-});
-
-// Infer the form values type from the schema
-type FormValues = z.infer<typeof schema>;
 
 // Field configuration for the FormWrapper
 const fields: TFieldConfig[] = [
@@ -35,12 +29,12 @@ const SetAddress: FC<IModalPropsWithStringValue> = ({
 }) => {
   const [setDeliverAddress, { error, isLoading }] =
     useSetDeliveryAddressMutation();
-  const formMethods = useForm<FormValues>({
-    resolver: zodResolver(schema),
+  const formMethods = useForm<TSetAddressFormValues>({
+    resolver: zodResolver(deliverAddressSchema),
     defaultValues: { deliveryAddress: initialValue },
   });
 
-  const onSubmit = async (data: FormValues) => {
+  const onSubmit = async (data: TSetAddressFormValues) => {
     // console.log("data", data);
     const toastId = toast.loading("Updating address...");
     try {

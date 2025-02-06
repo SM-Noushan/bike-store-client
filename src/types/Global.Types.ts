@@ -6,7 +6,7 @@ export type TMeta = {
   limit: number;
   page: number;
   total: number;
-  totalPage: number;
+  totalPages: number;
 };
 
 export type TCommonResponseData = {
@@ -40,3 +40,8 @@ export type TResponseError = {
 };
 
 export type TUserRole = keyof typeof USER_ROLE;
+
+export type TQueryParams = {
+  key: string;
+  value: string;
+};

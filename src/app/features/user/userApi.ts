@@ -1,5 +1,5 @@
-import { TProfile, TResponseRedux } from "@/types";
 import { baseApi } from "../../api/baseApi";
+import { TProfile, TQueryParams, TResponseRedux, TUser } from "@/types";
 
 const userPath = "/users";
 
@@ -17,6 +17,28 @@ const userApi = baseApi.injectEndpoints({
       },
       providesTags: [{ type: "Profile" }],
     }),
+    getAllUser: builder.query({
+      query: (args: TQueryParams[]) => {
+        const params = new URLSearchParams();
+        args.forEach((arg) => params.append(arg.key, arg.value));
+        return { url: userPath + "/users", method: "GET", params: params };
+      },
+      transformResponse: (response: TResponseRedux<TUser[]>) => {
+        return {
+          data: response.data,
+          meta: response.meta,
+        };
+      },
+      providesTags: (result) => {
+        const userTags = result?.data
+          ? result.data.map(({ _id }) => ({
+              type: "Users" as const,
+              id: _id,
+            }))
+          : [];
+        return [...userTags, { type: "Users", id: "LIST" }];
+      },
+    }),
     setDeliveryAddress: builder.mutation({
       query: (address) => ({
         url: userPath + "/set-delivery-address",
@@ -25,7 +47,19 @@ const userApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: [{ type: "Profile" }],
     }),
+    changeStatus: builder.mutation({
+      query: (id) => ({
+        url: userPath + "/change-status/" + id,
+        method: "PATCH",
+      }),
+      invalidatesTags: [{ type: "Users", id: "LIST" }],
+    }),
   }),
 });
 
-export const { useProfileQuery, useSetDeliveryAddressMutation } = userApi;
+export const {
+  useProfileQuery,
+  useGetAllUserQuery,
+  useChangeStatusMutation,
+  useSetDeliveryAddressMutation,
+} = userApi;

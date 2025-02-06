@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { changePasswordSchema } from "@/schema";
+import { changePasswordSchema, deliverAddressSchema } from "@/schema";
 import { TCommonResponseData } from "./Global.Types";
 
 export type TProfile = {
@@ -10,6 +10,8 @@ export type TProfile = {
   isActive: boolean;
 } & TCommonResponseData;
 
+export type TUser = TProfile;
+
 export type TProfileSectionProps = {
   title: string;
   content: string;
@@ -18,3 +20,4 @@ export type TProfileSectionProps = {
 };
 
 export type TChangePasswordFormValues = z.infer<typeof changePasswordSchema>;
+export type TSetAddressFormValues = z.infer<typeof deliverAddressSchema>;
