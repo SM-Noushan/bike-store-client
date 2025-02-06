@@ -1,25 +1,15 @@
-// import Pagination from "../../components/pageProps/shopPage/Pagination";
-// import ProductBanner from "../../components/pageProps/shopPage/ProductBanner";
-// import ShopSideNav from "../../components/pageProps/shopPage/ShopSideNav";
-
-import BikeGallery from "@/component/pages/bikes/BikesGallery";
-import SideFilter from "@/component/pages/bikes/SideFilters";
-import Breadcrumbs from "@/component/shared/breadcrumbs/Breadcrumbs";
-import { Button } from "@/components/ui/button";
-import {
-  Drawer,
-  DrawerContent,
-  DrawerHeader,
-  DrawerTrigger,
-} from "@/components/ui/drawer";
+import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import SideFilter from "@/component/pages/bikes/SideFilters";
+import BikeGallery from "@/component/pages/bikes/BikesGallery";
+import Breadcrumbs from "@/component/shared/breadcrumbs/Breadcrumbs";
 
 const Bikes = () => {
   const [open, setOpen] = useState(false);
   return (
     <div className="main-wrapper">
       <Breadcrumbs title="Bikes" currentLocation="Bikes" prevLocation="Home" />
-      {/* ================= Products Start here =================== */}
       <div className="w-full h-full flex pb-20 gap-10">
         <div className="hidden md:inline-flex w-[25%] h-full">
           <SideFilter />
@@ -36,10 +26,9 @@ const Bikes = () => {
           </DrawerContent>
         </Drawer>
         <div className="w-full md:w-[80%] lg:w-[75%] h-full flex flex-col gap-10">
-          <BikeGallery itemsPerPage={6} />
+          <BikeGallery />
         </div>
       </div>
-      {/* ================= Products End here ===================== */}
     </div>
   );
 };

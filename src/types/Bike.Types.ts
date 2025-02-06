@@ -21,5 +21,10 @@ export type TCart = {
   itemQuantity: number;
 } & TBike;
 
+export type TProductCard = {
+  badge?: boolean;
+  bike: TBike;
+};
+
 export type TBikeInputsFormValues = z.infer<typeof bikeSchema>;
 export type TUpdateBikeInputsFormValues = z.infer<typeof updateBikeSchema>;

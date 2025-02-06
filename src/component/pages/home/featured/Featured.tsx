@@ -1,10 +1,11 @@
-import { Heading, Product } from "@/component/product/Product";
 import React from "react";
 import Slider from "react-slick";
 import NextArrow from "./NextArrow";
 import PrevArrow from "./PrevArrow";
-import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { Product } from "@/component/product/Product";
+import SectionHeading from "@/component/shared/section/SectionHeading";
 
 // Use the provided image URL for all products.
 const defaultImage =
@@ -107,7 +108,7 @@ const FeaturedBikes: React.FC = () => {
 
   return (
     <div className="w-full py-16 container max-w-screen-2xl px-4 lg:px-12 mx-auto">
-      <Heading heading="Hot Collections🔥" />
+      <SectionHeading heading="Hot Collections🔥" />
       <Slider {...settings}>
         {productData.map((product) => (
           <div className="px-2" key={product._id}>
