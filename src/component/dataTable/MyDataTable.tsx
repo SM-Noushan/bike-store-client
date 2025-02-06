@@ -30,6 +30,7 @@ export type User = {
 };
 
 const MyDataTable = <T,>({
+  hasSerial,
   data,
   columns,
   actionColumn,
@@ -44,6 +45,7 @@ const MyDataTable = <T,>({
   filterPlaceholder = "Filter...",
 
   onAction,
+  actionLabel = "New",
   meta,
   setParams,
 }: TMyDataTable<T>) => {
@@ -69,19 +71,18 @@ const MyDataTable = <T,>({
 
   // Handle filter change from FilterSelect component
   const handleFilterChange = (value: string) => {
+    const keys = ["isActive", "inStock"];
     const filterParams = filterKeys?.map((key) => {
-      if (key === "isActive") {
-        return { key, value: value === "active" ? "true" : "false" };
-      }
-      return {
-        key,
-        value,
-      };
+      const values = ["active", "inStock"];
+      if (keys.includes(key))
+        return { key, value: values.includes(value) ? "true" : "false" };
+
+      return { key, value: String(value) };
     });
     setParams((prevParams) => {
       return [
         ...prevParams.filter(
-          (param) => param.key !== "isActive" && param.key !== "page"
+          (param) => !keys.includes(param.key) && param.key !== "page"
         ),
         firstPage,
         ...filterParams,
@@ -104,11 +105,12 @@ const MyDataTable = <T,>({
   const finalColumns = actionColumn
     ? [...columns, createActionColumn(actionColumn)]
     : columns;
-  finalColumns.unshift({
-    accessorKey: "_id",
-    header: "SL",
-    cell: ({ row }) => row.index + startIndex,
-  });
+  if (hasSerial)
+    finalColumns.unshift({
+      accessorKey: "_id",
+      header: "SL",
+      cell: ({ row }) => row.index + startIndex,
+    });
 
   const table = useReactTable({
     data,
@@ -142,7 +144,7 @@ const MyDataTable = <T,>({
           {onAction && (
             <div className="max-w -xs">
               <Button className="max-md:hidden" onClick={() => onAction()}>
-                New User
+                {actionLabel}
               </Button>
               <Button
                 size={"icon"}

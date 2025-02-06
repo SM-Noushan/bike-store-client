@@ -32,8 +32,8 @@ const Modal: FC<ModalProps> = ({
         <div className="p-4">
           {children || (
             <h1 className="text-neutral-400">
-              Are you sure you want to continue the action? You can not reverse
-              it.
+              Are you sure you want to continue the action? Once you proceed, it
+              cannot be undone.
             </h1>
           )}
 

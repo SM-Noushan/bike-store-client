@@ -51,6 +51,7 @@ const ManageUsers: FC = () => {
   return (
     <>
       <MyDataTable
+        hasSerial
         data={users ? (users.data as TUser[]) : []}
         columns={columns}
         actionColumn={userActions}

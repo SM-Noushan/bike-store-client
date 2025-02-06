@@ -1,4 +1,5 @@
 export * from "./Auth.Types";
+export * from "./Bike.Types";
 export * from "./Form.Types";
 export * from "./Modal.Types";
 export * from "./Global.Types";

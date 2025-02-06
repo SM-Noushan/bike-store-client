@@ -34,5 +34,5 @@ export const baseApi = createApi({
   reducerPath: "baseApi",
   baseQuery: baseQueryWithRefreshToken,
   endpoints: () => ({}),
-  tagTypes: ["Profile", "Users"],
+  tagTypes: ["Profile", "Users", "Products"],
 });

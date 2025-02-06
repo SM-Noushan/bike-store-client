@@ -8,6 +8,7 @@ export type TDataTableAction<T> = {
 };
 
 export type TMyDataTable<T> = {
+  hasSerial?: boolean;
   data: T[];
   columns: ColumnDef<T>[];
   actionColumn?: TDataTableAction<T>[];
@@ -22,6 +23,7 @@ export type TMyDataTable<T> = {
   filterPlaceholder?: string;
 
   onAction?: () => void;
+  actionLabel?: string;
   setParams: React.Dispatch<React.SetStateAction<TQueryParams[]>>;
   meta: TMeta | undefined;
 };
