@@ -28,5 +28,5 @@ export interface IModalPropsWithProductData<T>
 }
 
 export interface IAuthModalProps extends ICommonModalProps {
-  initialTab: () => void;
+  initialTab: string;
 }

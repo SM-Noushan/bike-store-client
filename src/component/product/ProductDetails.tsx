@@ -1,8 +1,10 @@
 import { TBike } from "@/types";
-import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { useCartHandler } from "@/hooks/useCartHandler";
 
 const ProductDetails = ({ bike }: { bike: TBike }) => {
+  const { handleCart, alreadyInCart } = useCartHandler(bike);
   return (
     <div className="flex flex-col gap-5">
       <div className="flex items-center gap-2">
@@ -16,10 +18,8 @@ const ProductDetails = ({ bike }: { bike: TBike }) => {
       <p className="font-medium text-lg">
         <span className="">Brand:</span> {bike.brand}
       </p>
-      <Button
-      // onClick={() => onAddToCart(bike, 1)}
-      >
-        Add to Cart
+      <Button onClick={handleCart}>
+        {alreadyInCart ? "Remove from cart" : "Add to Cart"}
       </Button>
       <div className="font-normal text-sm flex items-center gap-2">
         <p>

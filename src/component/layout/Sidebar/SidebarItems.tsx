@@ -11,10 +11,9 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { useAppSelector } from "@/app/hook";
+import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { Link, NavLink, useLocation } from "react-router-dom";
-import { selectCurrentUser } from "@/app/features/api/authSlice";
 
 const customerItems = [
   {
@@ -64,7 +63,7 @@ const adminItems = [
 export function SidebarItems({
   ...props
 }: React.ComponentProps<typeof Sidebar>) {
-  const currentUser = useAppSelector(selectCurrentUser);
+  const { handleLogout, currentUser } = useAuth();
   const items = currentUser?.role === "admin" ? adminItems : customerItems;
 
   const { pathname } = useLocation();
@@ -92,7 +91,7 @@ export function SidebarItems({
         ))}
       </SidebarContent>
       <SidebarFooter>
-        <Button>Logout</Button>
+        <Button onClick={handleLogout}>Logout</Button>
       </SidebarFooter>
     </Sidebar>
   );

@@ -1,4 +1,3 @@
-import { toast } from "sonner";
 import { TNavbar } from "@/types";
 import {
   Menubar,
@@ -9,12 +8,11 @@ import {
 } from "@/components/ui/menubar";
 import { FC, useState } from "react";
 import { Link } from "react-router-dom";
-import { useAppDispatch } from "@/app/hook";
 import AuthTabs from "@/component/auth/Auth";
-import { logout } from "@/app/features/api/authSlice";
+import { useAuth } from "@/hooks/useAuth";
 
 const MyMenubar: FC<TNavbar> = ({ navItems, label, button = false }) => {
-  const dispatch = useAppDispatch();
+  const { handleLogout } = useAuth();
   const [loginModal, setLoginModal] = useState(false);
   const [registerModal, setRegisterModal] = useState(false);
 
@@ -32,13 +30,7 @@ const MyMenubar: FC<TNavbar> = ({ navItems, label, button = false }) => {
                   {button ? (
                     button === "hybrid" ? (
                       navItem.name === "Logout" ? (
-                        <button
-                          onClick={() => {
-                            dispatch(logout());
-                            toast.success("Logged out successful");
-                          }}
-                          className={navItemCss}
-                        >
+                        <button onClick={handleLogout} className={navItemCss}>
                           {navItem.name}
                         </button>
                       ) : (

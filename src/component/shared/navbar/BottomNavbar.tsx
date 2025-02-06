@@ -7,12 +7,12 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import MyMenubar from "./MyMenubar";
-import { useAppSelector } from "@/app/hook";
+import { useAuth } from "@/hooks/useAuth";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Link, useNavigate } from "react-router-dom";
+import { useCartHandler } from "@/hooks/useCartHandler";
 import { MenubarShortcut } from "@/components/ui/menubar";
-import { selectCurrentUser } from "@/app/features/api/authSlice";
 
 const bikeCategories = [
   { name: "Mountain Bikes", to: "/bikes?category=mountain" },
@@ -35,7 +35,8 @@ const signedInUserOptions = [
 ];
 
 const BottomNavbar = () => {
-  const currentUser = useAppSelector(selectCurrentUser);
+  const { currentUser } = useAuth();
+  const { cartItem } = useCartHandler();
   const [searchQuery, setSearchQuery] = useState("");
   const navigate = useNavigate();
 
@@ -91,7 +92,7 @@ const BottomNavbar = () => {
             />
             <Link to="/my-cart" className="relative">
               <span className="absolute right-0 -top-3.5 text-sm font-semibold">
-                0
+                {cartItem}
               </span>
               <ShoppingCart size={20} />
             </Link>

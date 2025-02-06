@@ -1,7 +1,6 @@
 import { TUserRole } from "@/types";
-import { useAppSelector } from "@/app/hook";
+import { useAuth } from "@/hooks/useAuth";
 import { Navigate } from "react-router-dom";
-import { selectCurrentUser } from "@/app/features/api/authSlice";
 
 function ProtectedRoute({
   children,
@@ -10,7 +9,7 @@ function ProtectedRoute({
   children: React.ReactNode;
   role: TUserRole[];
 }) {
-  const currentUser = useAppSelector(selectCurrentUser);
+  const { currentUser } = useAuth();
 
   if (!currentUser || !role.includes(currentUser?.role as TUserRole))
     return <Navigate to="/dashboard" replace />;

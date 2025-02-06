@@ -1,60 +1,37 @@
 import { FC } from "react";
-import { MinusIcon, PlusIcon, XIcon } from "lucide-react";
+import { TCart } from "@/types";
 import { Button } from "@/components/ui/button";
+import { useCartHandler } from "@/hooks/useCartHandler";
+import { MinusIcon, PlusIcon, XIcon } from "lucide-react";
 
-export interface Item {
-  _id: string;
-  image: string;
-  name: string;
-  price: number;
-  quantity: number;
-}
-
-interface ItemCardProps {
-  item: Item;
-  //   onDelete?: (id: string) => void;
-  //   onDecrease?: (id: string) => void;
-  //   onIncrease?: (id: string) => void;
-}
-
-/**
- * A reusable button component for quantity adjustments.
- */
 const CartItemActionButton: FC<{
   Icon: React.ElementType;
   className?: string;
   onClick: () => void;
-}> = ({ Icon, onClick, className = "" }) => {
+  disabled?: boolean;
+}> = ({ Icon, onClick, className = "", disabled = false }) => {
   return (
     <Button
       onClick={onClick}
       variant="outline"
       size="icon"
       className={`size-6 ${className}`}
+      disabled={disabled}
     >
       <Icon />
     </Button>
   );
 };
 
-/**
- * CartItem component displays a product's details in the cart.
- */
-const CartItem: FC<ItemCardProps> = ({
-  item,
-  //   onDelete,
-  //   onDecrease,
-  //   onIncrease,
-}) => {
+const CartItem = ({ item }: { item: TCart }) => {
+  const { updateCartItem, removeFromCart } = useCartHandler();
   return (
     <div className="w-full grid grid-cols-5 border py-2">
-      {/* Product Information */}
       <div className="flex col-span-5 md:col-span-2 items-center gap-4 ml-4">
         <CartItemActionButton
           Icon={XIcon}
           className="rounded-full hover:bg-red-400 hover:text-white duration-300"
-          //   onClick={() => onDelete(item._id)}
-          onClick={() => console.log("Delete")}
+          onClick={() => removeFromCart(item._id)}
         />
         <img
           className="w-32 h-32 object-cover"
@@ -63,7 +40,6 @@ const CartItem: FC<ItemCardProps> = ({
         />
         <h1 className="font-titleFont font-semibold">{item.name}</h1>
       </div>
-      {/* Price, Quantity, and Subtotal */}
       <div
         className="col-span-5 md:col-span-3 flex items-center justify-between 
                       py-4 md:py-0 px-4 md:px-0 gap-6 md:gap-0"
@@ -74,18 +50,18 @@ const CartItem: FC<ItemCardProps> = ({
         <div className="w-1/3 flex items-center gap-6 text-lg">
           <CartItemActionButton
             Icon={MinusIcon}
-            //   onClick={() => onDecrease(item._id)}
-            onClick={() => console.log("Decrease")}
+            onClick={() => updateCartItem(item._id, "decrease")}
+            disabled={item.itemQuantity <= 1}
           />
-          <p>{item.quantity}</p>
+          <p>{item.itemQuantity}</p>
           <CartItemActionButton
             Icon={PlusIcon}
-            //   onClick={() => onIncrease(item._id)}
-            onClick={() => console.log("Increase")}
+            onClick={() => updateCartItem(item._id, "increase")}
+            disabled={item.itemQuantity >= item.quantity}
           />
         </div>
         <div className="w-1/3 flex items-center font-bold text-lg">
-          <p>${item.price * item.quantity}</p>
+          <p>${item.price * item.itemQuantity}</p>
         </div>
       </div>
     </div>

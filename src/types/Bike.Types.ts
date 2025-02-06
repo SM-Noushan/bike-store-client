@@ -17,5 +17,9 @@ export type TBike = {
   inStock: boolean;
 } & TCommonResponseData;
 
+export type TCart = {
+  itemQuantity: number;
+} & TBike;
+
 export type TBikeInputsFormValues = z.infer<typeof bikeSchema>;
 export type TUpdateBikeInputsFormValues = z.infer<typeof updateBikeSchema>;

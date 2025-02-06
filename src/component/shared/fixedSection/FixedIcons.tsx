@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { useAppSelector } from "@/app/hook";
+import { useAuth } from "@/hooks/useAuth";
 import AuthTabs from "@/component/auth/Auth";
 import { useNavigate } from "react-router-dom";
 import { User, ShoppingCart } from "lucide-react";
-import { selectCurrentUser } from "@/app/features/api/authSlice";
+import { useCartHandler } from "@/hooks/useCartHandler";
 
 interface FixedIconItem {
   id: string;
@@ -13,7 +13,6 @@ interface FixedIconItem {
   count?: number;
 }
 
-const products = [];
 const items: FixedIconItem[] = [
   {
     id: "profile",
@@ -26,12 +25,12 @@ const items: FixedIconItem[] = [
     route: "/my-cart",
     text: "Buy Now",
     Icon: ShoppingCart,
-    count: products.length,
   },
 ];
 
 const FixedIcons: React.FC = () => {
-  const currentUser = useAppSelector(selectCurrentUser);
+  const { cartItem } = useCartHandler();
+  const { currentUser } = useAuth();
   const navigate = useNavigate();
   const [authModal, setAuthModal] = useState(false);
 
@@ -54,7 +53,7 @@ const FixedIcons: React.FC = () => {
             <p className="text-xs font-semibold">{item.text}</p>
             {item?.id === "cart" && (
               <p className="absolute top-1 right-2 bg-neutral-600 text-white text-xs size-4 rounded-full flex items-center justify-center font-semibold">
-                {item.count || 0}
+                {cartItem}
               </p>
             )}
           </div>

@@ -1,71 +1,13 @@
+import { FC } from "react";
 import { Link } from "react-router-dom";
-import { FC, useEffect, useState } from "react";
+import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import emptyCartImg from "@/assets/emptyCart.png";
+import { useCartHandler } from "@/hooks/useCartHandler";
 import CartItem from "@/component/pages/myCart/CartItem";
 import Breadcrumbs from "@/component/shared/breadcrumbs/Breadcrumbs";
-import { Input } from "@/components/ui/input";
 
-// Define the Product interface
-export interface Product {
-  _id: string;
-  name: string;
-  image: string;
-  price: number;
-  quantity: number;
-  badge?: boolean;
-  color: string;
-  des?: string;
-}
-
-// Static product data for BikeStore
-const defaultImage =
-  "https://th.bing.com/th/id/OIP.06brl7ew-klxshEyTbXUPQHaHG?rs=1&pid=ImgDetMain";
-
-const initialProducts: Product[] = [
-  {
-    _id: "1",
-    name: "Mountain Bike",
-    image: defaultImage,
-    price: 500,
-    quantity: 2,
-    badge: true,
-    color: "Red",
-    des: "High performance mountain bike for rugged trails.",
-  },
-  {
-    _id: "2",
-    name: "City Commuter",
-    image: defaultImage,
-    price: 350,
-    quantity: 1,
-    badge: false,
-    color: "Blue",
-    des: "Perfect bike for daily commuting in the city.",
-  },
-  {
-    _id: "3",
-    name: "City Commuter",
-    image: defaultImage,
-    price: 350,
-    quantity: 1,
-    badge: false,
-    color: "Blue",
-    des: "Perfect bike for daily commuting in the city.",
-  },
-  {
-    _id: "4",
-    name: "City Commuter",
-    image: defaultImage,
-    price: 350,
-    quantity: 1,
-    badge: false,
-    color: "Blue",
-    des: "Perfect bike for daily commuting in the city.",
-  },
-];
-
-// Reusable cart header component
+// Cart header component
 const CartHeader: FC = () => (
   <div className="w-full h-20 bg-neutral-200/65 text-neutral-950 hidden lg:grid grid-cols-5 place-content-center px-6 text-lg font-semibold">
     <h2 className="col-span-2">Product</h2>
@@ -76,50 +18,23 @@ const CartHeader: FC = () => (
 );
 
 const MyCart: FC = () => {
-  const [products, setProducts] = useState<Product[]>(initialProducts);
-  const [totalAmt, setTotalAmt] = useState<number>(0);
-  const [shippingCharge, setShippingCharge] = useState<number>(0);
-
-  // Calculate the subtotal when products change
-  useEffect(() => {
-    const price = products.reduce(
-      (acc, item) => acc + item.price * item.quantity,
-      0
-    );
-    setTotalAmt(price);
-  }, [products]);
-
-  // Determine shipping charge based on subtotal
-  useEffect(() => {
-    if (totalAmt <= 200) {
-      setShippingCharge(30);
-    } else if (totalAmt <= 400) {
-      setShippingCharge(25);
-    } else if (totalAmt > 401) {
-      setShippingCharge(20);
-    }
-  }, [totalAmt]);
-
-  // Reset cart by clearing the static products array
-  const handleResetCart = () => {
-    setProducts([]);
-  };
-
+  const { myCart, resetCartItems, cartItemTotalPrice, shippingFee } =
+    useCartHandler();
   return (
     <div className="main-wrapper">
       <Breadcrumbs title="Cart" prevLocation="Home" currentLocation="My Cart" />
-      {products.length > 0 ? (
+      {myCart.length > 0 ? (
         <div className="pb-20 b">
           <CartHeader />
           <div className="my-4 lg:max-h-[485px] overflow-auto space-y-4">
-            {products.map((item) => (
+            {myCart.map((item) => (
               <CartItem key={item._id} item={item} />
             ))}
           </div>
           <div className="text-right mb-4">
             <Button
               variant={"destructive"}
-              onClick={handleResetCart}
+              onClick={resetCartItems}
               className="ml-auto px-12 rounded-none"
             >
               Reset Cart
@@ -149,19 +64,19 @@ const MyCart: FC = () => {
                 <p className="flex items-center justify-between border border-gray-400 border-b-0 py-1.5 text-lg px-4 font-medium">
                   Subtotal
                   <span className="font-semibold tracking-wide font-titleFont">
-                    ${totalAmt}
+                    ${cartItemTotalPrice}
                   </span>
                 </p>
                 <p className="flex items-center justify-between border border-gray-400 border-b-0 py-1.5 text-lg px-4 font-medium">
                   Shipping Charge
                   <span className="font-semibold tracking-wide font-titleFont">
-                    ${shippingCharge}
+                    ${shippingFee}
                   </span>
                 </p>
                 <p className="flex items-center justify-between border border-gray-400 py-1.5 text-lg px-4 font-medium">
                   Total
                   <span className="font-bold tracking-wide text-lg font-titleFont">
-                    ${totalAmt + shippingCharge}
+                    ${cartItemTotalPrice + shippingFee}
                   </span>
                 </p>
               </div>
