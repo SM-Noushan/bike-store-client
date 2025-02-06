@@ -19,6 +19,18 @@ const productApi = baseApi.injectEndpoints({
       },
       providesTags: [{ type: "Products", id: "LIST" }],
     }),
+    getProduct: builder.query({
+      query: (id) => ({
+        url: productPath + "/" + id,
+        method: "GET",
+      }),
+      transformResponse: (response: TResponseRedux<TBike>) => {
+        return {
+          data: response.data,
+        };
+      },
+      providesTags: [{ type: "Products", id: "LIST" }],
+    }),
     deleteProduct: builder.mutation({
       query: (id) => ({
         url: productPath + "/" + id,
@@ -47,6 +59,7 @@ const productApi = baseApi.injectEndpoints({
 
 export const {
   useGetAllProductQuery,
+  useGetProductQuery,
   useDeleteProductMutation,
   useAddProductMutation,
   useUpdateProductMutation,

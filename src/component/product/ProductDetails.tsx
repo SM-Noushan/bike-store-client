@@ -1,44 +1,36 @@
-import { FC } from "react";
+import { TBike } from "@/types";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 
-export interface ProductType {
-  _id: string;
-  img: string;
-  productName: string;
-  price: number;
-  des?: string;
-  color: string;
-  badge?: boolean;
-}
-
-// Define props for the ProductDetails component.
-interface ProductDetailsProps {
-  productInfo: ProductType;
-  onAddToCart?: (product: ProductType, quantity?: number) => void;
-}
-
-const ProductDetails: FC<ProductDetailsProps> = ({
-  productInfo,
-  onAddToCart,
-}) => {
+const ProductDetails = ({ bike }: { bike: TBike }) => {
   return (
     <div className="flex flex-col gap-5">
-      <h2 className="text-4xl font-semibold">{productInfo.productName}</h2>
-      <p className="text-xl font-semibold">${productInfo.price}</p>
-      <p className="text-base text-neutral-600">{productInfo.des}</p>
-      <p className="text-sm">Be the first to leave a review.</p>
+      <div className="flex items-center gap-2">
+        <h2 className="text-4xl font-semibold">{bike.name}</h2>
+        <Badge>{bike.inStock ? "In stock" : "Out of stock"}</Badge>
+      </div>
+      <p className="text-xl font-semibold">${bike.price}</p>
+      <p className="text-base text-neutral-600">Q: {bike.quantity}</p>
+      <p className="text-base text-neutral-600">{bike.description}</p>
+      <p className="text-sm">Be the first to review this product.</p>
       <p className="font-medium text-lg">
-        <span className="font-normal">Colors:</span> {productInfo.color}
+        <span className="">Brand:</span> {bike.brand}
       </p>
       <Button
-      // onClick={() => onAddToCart(productInfo, 1)}
+      // onClick={() => onAddToCart(bike, 1)}
       >
         Add to Cart
       </Button>
-      <p className="font-normal text-sm">
-        <span className="text-base font-medium">Categories:</span> BikeStore
-        Exclusive, Best Sellers, New Arrivals
-      </p>
+      <div className="font-normal text-sm flex items-center gap-2">
+        <p>
+          <span className="text-base font-medium">Category: </span>
+          {bike.category}
+        </p>
+        <p>
+          <span className="text-base font-medium">Model: </span>
+          {bike.model}
+        </p>
+      </div>
     </div>
   );
 };

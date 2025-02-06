@@ -1,24 +1,23 @@
-import { useState } from "react";
 import { toast } from "sonner";
-import Modal from "@/component/modal/Modal";
+import { FC, useState } from "react";
+import { useForm } from "react-hook-form";
 import {
   TCustomError,
-  IModalPropsWithTargetId,
   TFieldConfig,
   TBikeInputsFormValues,
   IModalPropsWithProductData,
   TBike,
 } from "@/types";
-import { useForm } from "react-hook-form";
-import FormWrapper from "@/component/form/FormWrapper";
-import { bikeSchema, updateBikeSchema } from "@/schema/Bike.Schema";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { ProductCategories } from "@/constants/Constant";
-import { uploadToCloudinary } from "@/utils/uploadImageToCloudinary";
 import {
   useAddProductMutation,
   useUpdateProductMutation,
 } from "@/app/features/product/productApi";
+import Modal from "@/component/modal/Modal";
+import { zodResolver } from "@hookform/resolvers/zod";
+import FormWrapper from "@/component/form/FormWrapper";
+import { bikeSchema, updateBikeSchema } from "@/schema";
+import { ProductCategories } from "@/constants/Constant";
+import { uploadToCloudinary } from "@/utils/uploadImageToCloudinary";
 
 const fields: TFieldConfig[] = [
   {
@@ -74,75 +73,75 @@ const fields: TFieldConfig[] = [
   },
 ];
 
-const BikeInputModal = ({
+const BikeInputModal: FC<IModalPropsWithProductData<TBike>> = ({
   open,
   initialValue: actionType,
   setOpen,
   updateData,
   resetUpdateData,
-}: IModalPropsWithProductData<TBike>) => {
-  const [isLoading, setIsLoading] = useState(false);
+}) => {
   const isUpdate = actionType === "update";
-  let formConfig = {};
-  if (isUpdate) {
-    const { name, brand, model, price, category, description, quantity } =
-      updateData as TBike;
-    formConfig = {
-      resolver: zodResolver(updateBikeSchema),
-      defaultValues: {
-        name,
-        brand,
-        model,
-        price: String(price),
-        category,
-        description,
-        quantity: String(quantity),
-      },
-    };
-  } else
-    formConfig = {
-      resolver: zodResolver(bikeSchema),
-    };
+  const formConfig = isUpdate
+    ? {
+        resolver: zodResolver(updateBikeSchema),
+        defaultValues: {
+          name: updateData?.name,
+          brand: updateData?.brand,
+          model: updateData?.model,
+          category: updateData?.category,
+          description: updateData?.description,
+          quantity: String(updateData?.quantity) as unknown as number,
+          price: String(updateData?.price) as unknown as number,
+        },
+      }
+    : {
+        resolver: zodResolver(bikeSchema),
+      };
+
   const formMethods = useForm<TBikeInputsFormValues>(formConfig);
 
+  const [isLoading, setIsLoading] = useState(false);
   const [addProduct, { error: addProductError }] = useAddProductMutation();
   const [updateProduct, { error: updateProductError }] =
     useUpdateProductMutation();
+
+  // Helper to collect only dirty fields when updating
+  const getDirtyFields = (
+    data: TBikeInputsFormValues
+  ): Partial<TBikeInputsFormValues> =>
+    Object.keys(formMethods.formState.dirtyFields).reduce<
+      Partial<TBikeInputsFormValues>
+    >((acc, key) => {
+      const typedKey = key as keyof TBikeInputsFormValues;
+      return { ...acc, [typedKey]: data[typedKey] };
+    }, {});
 
   const onSubmit = async (data: TBikeInputsFormValues) => {
     setIsLoading(true);
     const toastId = toast.loading(
       `${isUpdate ? "Updating" : "Adding"} bike...`
     );
-    let myData;
-    if (isUpdate)
-      myData = Object.keys(formMethods.formState.dirtyFields).reduce(
-        (acc, key) => {
-          const typedKey = key as keyof TBikeInputsFormValues;
-          acc[typedKey] = data[typedKey];
-          return acc;
-        },
-        {} as Partial<TBikeInputsFormValues>
-      );
-    else myData = data;
-    // console.log(myData);
-    // return;
     try {
+      // If updating, only send dirty fields.
+      const myData = isUpdate ? getDirtyFields(data) : data;
+      if (Object.keys(myData).length === 0)
+        return toast.error("No changes detected", { id: toastId });
       let image;
-      if (myData.image) image = await uploadToCloudinary(data.image);
+      if (myData.image) {
+        image = await uploadToCloudinary(data.image);
+      }
       if (isUpdate) {
-        let requiredData;
-        if (image) requiredData = { ...myData, image };
-        else requiredData = myData;
+        const requiredData = image ? { ...myData, image } : myData;
         await updateProduct({
           id: updateData?._id,
           data: requiredData,
         }).unwrap();
       } else await addProduct({ ...myData, image }).unwrap();
-      toast.success(
-        `Product ${isUpdate ? "updated" : "added"} added successfully`,
-        { id: toastId }
-      );
+
+      toast.success(`Product ${isUpdate ? "updated" : "added"} successfully`, {
+        id: toastId,
+      });
+      if (isUpdate && resetUpdateData) resetUpdateData(null);
       setOpen(false);
     } catch (error) {
       toast.error(

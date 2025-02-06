@@ -1,4 +1,5 @@
 import { FC, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { ColumnDef } from "@tanstack/react-table";
 import MyDataTable from "@/component/dataTable/MyDataTable";
 import { TBike, TDataTableAction, TQueryParams } from "@/types";
@@ -43,6 +44,10 @@ const columns: ColumnDef<TBike>[] = [
     header: "Category",
   },
   {
+    accessorKey: "price",
+    header: "Price",
+  },
+  {
     accessorKey: "quantity",
     header: "Quantity",
   },
@@ -55,17 +60,23 @@ const filterOptions = [
 ];
 
 const ManageBikes: FC = () => {
+  const navigate = useNavigate();
   const [params, setParams] = useState<TQueryParams[]>([
+    { key: "sort", value: "-updatedAt" },
     itemPerDataTable,
     firstPage,
   ]);
-  const [openDeleteModal, setOpenDeleteModal] = useState(false);
-  const [openBikeInputsModal, setOpenBikeInputsModal] = useState(false);
   const [targetId, setTargetId] = useState("");
+  const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [updateData, setUpdateData] = useState<TBike | null>(null);
   const { data: bikes, isFetching } = useGetAllProductQuery(params);
+  const [openBikeInputsModal, setOpenBikeInputsModal] = useState(false);
 
   const userActions: TDataTableAction<TBike>[] = [
+    {
+      label: "View Details",
+      onClick: (bike: TBike) => navigate(`/bike/${bike._id}`),
+    },
     {
       label: "Update",
       onClick: (bike: TBike) => {
@@ -115,7 +126,7 @@ const ManageBikes: FC = () => {
           resetTargetId={setTargetId}
         />
       )}
-      {/* Bike Input Modal */}
+      {/* Bike Input Modal - Add or Update */}
       {openBikeInputsModal && (
         <BikeInputModal
           open

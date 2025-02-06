@@ -17,7 +17,7 @@ export const firstPage = {
 
 export const itemPerDataTable = {
   key: "limit",
-  value: "9",
+  value: "10",
 };
 
 export const ProductCategory = {

@@ -1,21 +1,14 @@
 import { FC } from "react";
 import Breadcrumbs from "@/component/shared/breadcrumbs/Breadcrumbs";
-import ProductDetails, {
-  ProductType,
-} from "@/component/product/ProductDetails";
+import ProductDetails from "@/component/product/ProductDetails";
 import { Skeleton } from "@/components/ui/skeleton";
-
-const productInfo: ProductType = {
-  _id: "dummy-001",
-  img: "https://wallpapercave.com/wp/wp1898333.jpg",
-  productName: "Ultimate Mountain Bike",
-  price: 1299,
-  des: "This ultimate mountain bike is designed for all terrains and adventurous rides. Experience unmatched performance and style with cutting-edge technology built for off-road cycling.",
-  color: "Red",
-  badge: true,
-};
+import { useParams } from "react-router-dom";
+import { useGetProductQuery } from "@/app/features/product/productApi";
+import { TBike } from "@/types";
 
 const Bike: FC = () => {
+  const { id } = useParams();
+  const { data: product, isFetching } = useGetProductQuery(id);
   return (
     <div className="main-wrapper min-h-[calc(100dvh-505px)]">
       <div className="xl:-mt-10 -mt-7">
@@ -32,17 +25,23 @@ const Bike: FC = () => {
         </div>
         {/* Product Image */}
         <div className="h-full xl:col-span-2">
-          <Skeleton className="h-28 md:h-40 xl:size-full" />
-          {/* <img
-            className="w-full h-full object-cover"
-            src={productInfo.img}
-            alt={productInfo.productName || "Product Image"}
-          /> */}
+          {isFetching ? (
+            <Skeleton className="h-28 md:h-40 xl:size-full" />
+          ) : (
+            <img
+              className="w-full h-full object-cover"
+              src={product?.data?.image}
+              alt={product?.data?.name || "Product Image"}
+            />
+          )}
         </div>
         {/* Product Information */}
         <div className="h-full w-full md:col-span-2 xl:col-span-3 xl:p-14 flex flex-col gap-6 justify-center">
-          <Skeleton className="w-full h-64" />
-          {/* <ProductDetails productInfo={productInfo} /> */}
+          {isFetching ? (
+            <Skeleton className="w-full h-64" />
+          ) : (
+            <ProductDetails bike={product?.data as TBike} />
+          )}
         </div>
       </div>
     </div>
