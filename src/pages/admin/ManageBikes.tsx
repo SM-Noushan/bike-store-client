@@ -3,6 +3,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import MyDataTable from "@/component/dataTable/MyDataTable";
 import { TBike, TDataTableAction, TQueryParams } from "@/types";
 import { firstPage, itemPerDataTable } from "@/constants/Constant";
+import BikeInputModal from "@/component/pages/manageBikes/BikeInputs";
 import { useGetAllProductQuery } from "@/app/features/product/productApi";
 import DeleteBikeModal from "@/component/pages/manageBikes/DeleteBikeModal";
 
@@ -58,16 +59,18 @@ const ManageBikes: FC = () => {
     itemPerDataTable,
     firstPage,
   ]);
-  const [open, setOpen] = useState(false);
+  const [openDeleteModal, setOpenDeleteModal] = useState(false);
+  const [openBikeInputsModal, setOpenBikeInputsModal] = useState(false);
   const [targetId, setTargetId] = useState("");
+  const [updateData, setUpdateData] = useState<TBike | null>(null);
   const { data: bikes, isFetching } = useGetAllProductQuery(params);
 
   const userActions: TDataTableAction<TBike>[] = [
     {
       label: "Update",
       onClick: (bike: TBike) => {
-        // setTargetId(bike._id);
-        // setOpen(true);
+        setUpdateData(bike);
+        setOpenBikeInputsModal(true);
       },
     },
     {
@@ -75,13 +78,14 @@ const ManageBikes: FC = () => {
       variant: "danger",
       onClick: (bike: TBike) => {
         setTargetId(bike._id);
-        setOpen(true);
+        setOpenDeleteModal(true);
       },
     },
   ];
 
   const handleAction = () => {
-    console.log("Add new bike");
+    setUpdateData(null);
+    setOpenBikeInputsModal(true);
   };
 
   return (
@@ -103,12 +107,22 @@ const ManageBikes: FC = () => {
         actionLabel="New Bike"
       />
       {/* Delete Bike Modal */}
-      {open && targetId && (
+      {openDeleteModal && targetId && (
         <DeleteBikeModal
           initialValue={targetId}
           open
-          setOpen={setOpen}
+          setOpen={setOpenDeleteModal}
           resetTargetId={setTargetId}
+        />
+      )}
+      {/* Bike Input Modal */}
+      {openBikeInputsModal && (
+        <BikeInputModal
+          open
+          initialValue={updateData ? "update" : "add"}
+          setOpen={setOpenBikeInputsModal}
+          resetUpdateData={setUpdateData}
+          updateData={updateData}
         />
       )}
     </>

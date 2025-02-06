@@ -21,6 +21,12 @@ export interface IModalPropsWithTargetId extends IModalPropsWithStringValue {
   resetTargetId: (id: string) => void;
 }
 
+export interface IModalPropsWithProductData<T>
+  extends IModalPropsWithStringValue {
+  updateData?: T | null;
+  resetUpdateData?: (data: T | null) => void;
+}
+
 export interface IAuthModalProps extends ICommonModalProps {
   initialTab: () => void;
 }

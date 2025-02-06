@@ -120,7 +120,7 @@ const MyDataTable = <T,>({
   });
 
   return (
-    <div className="w-full p-4 h-full">
+    <div className="py-2 sm:py-4 h-full mx-auto w-[calc(100vw-50px)] md:w-[calc(100vw-300px)] xl:w-full">
       {/* Header: Search and Filter Controls */}
       <div className="flex items-center justify-between gap-4 py-4">
         {showSearch && (
@@ -128,7 +128,7 @@ const MyDataTable = <T,>({
             type="text"
             placeholder={searchPlaceholder}
             onChange={handleSearchChange}
-            className="max-w-80 md:max-w-sm"
+            className="max-w-xs md:max-w-sm"
           />
         )}
         <div className="flex items-center space-x-2">

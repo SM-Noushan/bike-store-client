@@ -24,20 +24,21 @@ const Modal: FC<ModalProps> = ({
       <DialogTrigger asChild>
         <span />
       </DialogTrigger>
-      <DialogContent className="max-sm:max-w-80">
+      <DialogContent className="max-sm:max-w-[calc(100vw-2.5rem)]">
         <DialogHeader>
           <DialogTitle className="px-3.5">{title}</DialogTitle>
           <DialogClose onClick={() => onClose(false)} />
         </DialogHeader>
-        <div className="p-4">
-          {children || (
-            <h1 className="text-neutral-400">
-              Are you sure you want to continue the action? Once you proceed, it
-              cannot be undone.
-            </h1>
-          )}
-
-          <div className="flex justify-end gap-2 mt-4">
+        <div>
+          <div className="max-h-[calc(100vh-15rem)] overflow-y-auto px-4">
+            {children || (
+              <h1 className="text-neutral-400">
+                Are you sure you want to continue the action? Once you proceed,
+                it cannot be undone.
+              </h1>
+            )}
+          </div>
+          <div className="flex justify-end gap-2 mt-4 px-4">
             <Button
               variant="outline"
               onClick={() => onClose(false)}

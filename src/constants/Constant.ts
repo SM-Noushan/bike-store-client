@@ -1,5 +1,10 @@
 import { TProductCategory } from "@/types/Bike.Types";
 
+export const CLOUDINARY_CONFIG = {
+  cloudName: import.meta.env.VITE_CLOUDINARY_CLOUD_NAME,
+  uploadPreset: import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET,
+};
+
 export const USER_ROLE = {
   admin: "admin",
   customer: "customer",

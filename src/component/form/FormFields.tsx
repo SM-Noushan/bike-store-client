@@ -57,6 +57,18 @@ const FormFields = ({ methods, fields }: TFormFields) => (
                       {...controllerField}
                     />
                   ),
+                  file: (
+                    <Input
+                      type="file"
+                      accept="image/*"
+                      placeholder={field.placeholder}
+                      onChange={(e) => {
+                        controllerField.onChange(
+                          e?.target?.files ? e.target.files[0] : null
+                        );
+                      }}
+                    />
+                  ),
                   textarea: (
                     <Textarea
                       placeholder={field.placeholder}

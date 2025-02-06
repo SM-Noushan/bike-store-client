@@ -1,5 +1,7 @@
-import { ProductCategory } from "@/constants/Constant";
+import { z } from "zod";
 import { TCommonResponseData } from "./Global.Types";
+import { ProductCategory } from "@/constants/Constant";
+import { bikeSchema, updateBikeSchema } from "@/schema/Bike.Schema";
 
 export type TProductCategory = keyof typeof ProductCategory;
 
@@ -14,3 +16,6 @@ export type TBike = {
   quantity: number;
   inStock: boolean;
 } & TCommonResponseData;
+
+export type TBikeInputsFormValues = z.infer<typeof bikeSchema>;
+export type TUpdateBikeInputsFormValues = z.infer<typeof updateBikeSchema>;
