@@ -1,13 +1,13 @@
-import { toast } from "sonner";
-import { FC, useState } from "react";
-import { useForm } from "react-hook-form";
 import {
+  TBike,
   TCustomError,
   TFieldConfig,
   TBikeInputsFormValues,
   IModalPropsWithProductData,
-  TBike,
 } from "@/types";
+import { toast } from "sonner";
+import { FC, useState } from "react";
+import { useForm } from "react-hook-form";
 import {
   useAddProductMutation,
   useUpdateProductMutation,
@@ -16,62 +16,8 @@ import Modal from "@/component/modal/Modal";
 import { zodResolver } from "@hookform/resolvers/zod";
 import FormWrapper from "@/component/form/FormWrapper";
 import { bikeSchema, updateBikeSchema } from "@/schema";
-import { ProductCategories } from "@/constants/Constant";
-import { uploadToCloudinary } from "@/utils/uploadImageToCloudinary";
-
-const fields: TFieldConfig[] = [
-  {
-    name: "name",
-    label: "Name",
-    type: "text",
-    placeholder: "Enter bike name",
-  },
-  {
-    name: "brand",
-    label: "Brand",
-    type: "text",
-    placeholder: "Enter bike brand",
-  },
-  {
-    name: "model",
-    label: "Model",
-    type: "text",
-    placeholder: "Enter bike model",
-  },
-  {
-    name: "description",
-    label: "Description",
-    type: "textarea",
-    placeholder: "Enter bike description",
-  },
-  {
-    name: "category",
-    label: "Category",
-    type: "select",
-    placeholder: "Select a category",
-    options: ProductCategories.map((category) => ({
-      label: category,
-      value: category,
-    })),
-  },
-  {
-    name: "price",
-    label: "Price",
-    type: "number",
-    placeholder: "Enter bike price",
-  },
-  {
-    name: "quantity",
-    label: "Quantity",
-    type: "number",
-    placeholder: "Enter bike quantity",
-  },
-  {
-    name: "image",
-    label: "Image",
-    type: "file",
-  },
-];
+import { capitalize, uploadToCloudinary } from "@/utils";
+import { useProductMetaData } from "@/hooks/useProductMetaData";
 
 const BikeInputModal: FC<IModalPropsWithProductData<TBike>> = ({
   open,
@@ -80,6 +26,60 @@ const BikeInputModal: FC<IModalPropsWithProductData<TBike>> = ({
   updateData,
   resetUpdateData,
 }) => {
+  const { productCategories } = useProductMetaData();
+  const fields: TFieldConfig[] = [
+    {
+      name: "name",
+      label: "Name",
+      type: "text",
+      placeholder: "Enter bike name",
+    },
+    {
+      name: "brand",
+      label: "Brand",
+      type: "text",
+      placeholder: "Enter bike brand",
+    },
+    {
+      name: "model",
+      label: "Model",
+      type: "text",
+      placeholder: "Enter bike model",
+    },
+    {
+      name: "description",
+      label: "Description",
+      type: "textarea",
+      placeholder: "Enter bike description",
+    },
+    {
+      name: "category",
+      label: "Category",
+      type: "select",
+      placeholder: "Select a category",
+      options: productCategories.map((category) => ({
+        value: category.toLowerCase(),
+        label: capitalize(category),
+      })),
+    },
+    {
+      name: "price",
+      label: "Price",
+      type: "number",
+      placeholder: "Enter bike price",
+    },
+    {
+      name: "quantity",
+      label: "Quantity",
+      type: "number",
+      placeholder: "Enter bike quantity",
+    },
+    {
+      name: "image",
+      label: "Image",
+      type: "file",
+    },
+  ];
   const isUpdate = actionType === "update";
   const formConfig = isUpdate
     ? {
@@ -88,7 +88,7 @@ const BikeInputModal: FC<IModalPropsWithProductData<TBike>> = ({
           name: updateData?.name,
           brand: updateData?.brand,
           model: updateData?.model,
-          category: updateData?.category,
+          category: updateData?.category.toLowerCase(),
           description: updateData?.description,
           quantity: String(updateData?.quantity) as unknown as number,
           price: String(updateData?.price) as unknown as number,

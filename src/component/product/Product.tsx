@@ -57,7 +57,7 @@ export const Product: FC<TProductCard> = ({ bike, badge = false }) => {
           <p className="text-[#767676] text-[14px]">${bike.price}</p>
         </div>
         <div>
-          <p className="text-[#767676] text-[14px]">
+          <p className="text-[#767676] text-[14px] capitalize">
             {bike.category} - {bike.brand} ({bike.model})
           </p>
         </div>

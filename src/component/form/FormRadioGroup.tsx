@@ -17,7 +17,8 @@ interface FormRadioGroupProps {
 const FormRadioGroup = ({ controllerField, options }: FormRadioGroupProps) => {
   return (
     <RadioGroup
-      defaultValue={controllerField.value || ""}
+      key={controllerField.value}
+      defaultValue={controllerField.value}
       onValueChange={controllerField.onChange}
     >
       {options.map((option) => (

@@ -5,9 +5,15 @@ interface CheckboxGroupProps {
   name: string;
   options: { value: string; label: string }[];
   control: any;
+  defaultValue?: string;
 }
 
-const CheckboxGroup = ({ name, options, control }: CheckboxGroupProps) => {
+const CheckboxGroup = ({
+  name,
+  options,
+  control,
+  defaultValue,
+}: CheckboxGroupProps) => {
   const { field } = useController({ name, control });
 
   const handleChange = (checked: boolean, value: string) => {
@@ -26,7 +32,9 @@ const CheckboxGroup = ({ name, options, control }: CheckboxGroupProps) => {
         <div key={option.value} className="flex items-center space-x-2">
           <Checkbox
             checked={
-              Array.isArray(field.value) && field.value.includes(option.value)
+              (Array.isArray(field.value) &&
+                field.value.includes(option.value)) ||
+              option.value === defaultValue
             }
             onCheckedChange={(checked) =>
               handleChange(checked as boolean, option.value)

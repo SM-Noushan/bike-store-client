@@ -1,4 +1,3 @@
-import { TNavbar } from "@/types";
 import {
   Menubar,
   MenubarContent,
@@ -6,10 +5,11 @@ import {
   MenubarMenu,
   MenubarTrigger,
 } from "@/components/ui/menubar";
+import { TNavbar } from "@/types";
 import { FC, useState } from "react";
 import { Link } from "react-router-dom";
-import AuthTabs from "@/component/auth/Auth";
 import { useAuth } from "@/hooks/useAuth";
+import AuthTabs from "@/component/auth/Auth";
 
 const MyMenubar: FC<TNavbar> = ({ navItems, label, button = false }) => {
   const { handleLogout } = useAuth();

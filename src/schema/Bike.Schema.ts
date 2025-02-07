@@ -1,4 +1,3 @@
-import { ProductCategories } from "@/constants/Constant";
 import { z } from "zod";
 
 // Common reusable validations
@@ -18,7 +17,7 @@ export const bikeSchema = z.object({
     .refine((val) => !isNaN(val) && val >= 0, {
       message: "Price must be a non-negative number",
     }),
-  category: z.enum(ProductCategories as [string]),
+  category: trimmedString,
   description: trimmedString,
   quantity: z
     .string()

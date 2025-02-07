@@ -1,5 +1,6 @@
 import { baseApi } from "../../api/baseApi";
 import { TBike, TQueryParams, TResponseRedux } from "@/types";
+import { TProductMetaData } from "./productMetadataSlice";
 
 const productPath = "/products";
 
@@ -31,6 +32,15 @@ const productApi = baseApi.injectEndpoints({
       },
       providesTags: [{ type: "Products", id: "LIST" }],
     }),
+    getProductMetaData: builder.query({
+      query: () => ({
+        url: productPath + "/brand-model-category",
+        method: "GET",
+      }),
+      transformResponse: (response: TResponseRedux<TProductMetaData>) =>
+        response.data,
+      providesTags: [{ type: "Products", id: "PRODUCT_METADATA" }],
+    }),
     deleteProduct: builder.mutation({
       query: (id) => ({
         url: productPath + "/" + id,
@@ -60,6 +70,7 @@ const productApi = baseApi.injectEndpoints({
 export const {
   useGetAllProductQuery,
   useGetProductQuery,
+  useGetProductMetaDataQuery,
   useDeleteProductMutation,
   useAddProductMutation,
   useUpdateProductMutation,

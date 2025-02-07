@@ -1,18 +1,22 @@
-import { useState } from "react";
-import MyPagination from "./Pagination";
 import { TQueryParams } from "@/types";
+import MyPagination from "./Pagination";
+import { useEffect, useState } from "react";
 import { firstPage } from "@/constants/Constant";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Product } from "@/component/product/Product";
+import { useBikeParams } from "@/hooks/useBikeParams";
 import { useGetAllProductQuery } from "@/app/features/product/productApi";
 
 const itemsPerPage = 6;
 const BikeGallery = () => {
+  const { filterParams } = useBikeParams();
+  // console.log(filterParams);
   const [page, setPage] = useState<number>(1);
   const [params, setParams] = useState<TQueryParams[]>([
     { key: "limit", value: itemsPerPage.toString() },
-    firstPage
+    firstPage,
   ]);
+
   const { data: bikes, isFetching } = useGetAllProductQuery(params);
   const {
     page: currentPage = 0,
@@ -30,19 +34,35 @@ const BikeGallery = () => {
     ]);
   };
 
+  useEffect(() => {
+    setParams([
+      { key: "limit", value: itemsPerPage.toString() },
+      firstPage,
+      ...filterParams,
+    ]);
+  }, [filterParams]);
+
   return (
     <div>
       {/* Product Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-10 md:gap-4 lg:gap-10 min-h-[65vh]">
-        {isFetching
-          ? Array.from({ length: itemsPerPage }).map((_, index) => (
-              <Skeleton key={index} className="h-80" />
-            ))
-          : bikes?.data?.map((bike) => (
-              <div key={bike._id} className="w-full">
-                <Product bike={bike} />
-              </div>
-            ))}
+        {isFetching ? (
+          Array.from({ length: itemsPerPage }).map((_, index) => (
+            <Skeleton key={index} className="h-80" />
+          ))
+        ) : (bikes?.data?.length ?? 0) > 0 ? (
+          bikes?.data?.map((bike) => (
+            <div key={bike._id} className="w-full">
+              <Product bike={bike} />
+            </div>
+          ))
+        ) : (
+          <div className="col-span-1 md:col-span-2 xl:col-span-3">
+            <span className="bg-yellow-200 w-full h-20 rounded-md text-neutral-800 font-semibold text-xl flex items-center justify-center">
+              No Bikes Found
+            </span>
+          </div>
+        )}
       </div>
       {/* Pagination and Summary */}
       <div className="flex flex-col md:flex-row justify-center md:justify-between items-center mt-6 gap-y-2">

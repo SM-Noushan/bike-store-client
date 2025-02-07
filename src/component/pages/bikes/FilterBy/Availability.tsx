@@ -8,12 +8,14 @@ const fields: TFieldConfig[] = [
     label: <FilterByHeading title="Availability" />,
     type: "radio",
     options: [
-      { value: "in-stock", label: "In Stock" },
-      { value: "out-of-stock", label: "Out of Stock" },
+      { value: "true", label: "In Stock" },
+      { value: "false", label: "Out of Stock" },
     ],
   },
 ];
 
 export default function FilterByAvailability({ formMethods }: TFormMethod) {
-  return <FormWrapper fields={fields} formMethods={formMethods} />;
+  return (
+    <FormWrapper fields={fields} formMethods={formMethods} error={undefined} />
+  );
 }

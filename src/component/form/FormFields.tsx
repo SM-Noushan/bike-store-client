@@ -22,7 +22,7 @@ const FormFields = ({ methods, fields }: TFormFields) => (
       <FormField
         key={field.name}
         control={methods.control}
-        name={field.name as any}
+        name={field.name}
         render={({ field: controllerField }) => (
           <FormItem>
             <FormLabel>
@@ -107,6 +107,7 @@ const FormFields = ({ methods, fields }: TFormFields) => (
                           name={field.name}
                           options={field.options}
                           control={methods.control}
+                          defaultValue={field.defaultValue}
                         />
                       </ScrollArea>
                     ) : null,

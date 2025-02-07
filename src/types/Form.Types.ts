@@ -14,6 +14,7 @@ interface IBaseFieldConfig {
   label?: string | ReactNode;
   placeholder?: string;
   description?: string;
+  defaultValue?: string;
 }
 
 interface IInput {

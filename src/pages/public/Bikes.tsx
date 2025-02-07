@@ -11,7 +11,7 @@ const Bikes = () => {
     <div className="main-wrapper">
       <Breadcrumbs title="Bikes" currentLocation="Bikes" prevLocation="Home" />
       <div className="w-full h-full flex pb-20 gap-10">
-        <div className="hidden md:inline-flex w-[25%] h-full">
+        <div className="hidden md:inline-flex w-1/4 h-full">
           <SideFilter />
         </div>
         {/* Mobile Drawer: Visible on mobile */}
@@ -25,7 +25,7 @@ const Bikes = () => {
             <SideFilter />
           </DrawerContent>
         </Drawer>
-        <div className="w-full md:w-[80%] lg:w-[75%] h-full flex flex-col gap-10">
+        <div className="w-3/4 h-full flex flex-col mx-auto gap-10">
           <BikeGallery />
         </div>
       </div>

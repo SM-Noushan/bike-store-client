@@ -42,6 +42,7 @@ const columns: ColumnDef<TBike>[] = [
   {
     accessorKey: "category",
     header: "Category",
+    cell: ({ row }) => <p className="capitalize">{row?.original?.category}</p>,
   },
   {
     accessorKey: "price",
