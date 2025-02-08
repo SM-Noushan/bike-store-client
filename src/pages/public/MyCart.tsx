@@ -1,6 +1,8 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import { toast } from "sonner";
 import { Link } from "react-router-dom";
+import { useAuth } from "@/hooks/useAuth";
+import AuthTabs from "@/component/auth/Auth";
 import { Input } from "@/components/ui/input";
 import { loadStripe } from "@stripe/stripe-js";
 import { Button } from "@/components/ui/button";
@@ -24,10 +26,13 @@ const CartHeader: FC = () => (
 );
 
 const MyCart: FC = () => {
+  const [openAuthModal, setOpenAuthModal] = useState(false);
+  const { currentUser } = useAuth();
   const { myCart, resetCartItems, cartItemTotalPrice, shippingFee } =
     useCartHandler();
   const [checkout, { isLoading }] = useCheckoutMutation();
   const handleCheckout = async () => {
+    if (!currentUser) return setOpenAuthModal(true);
     const toastId = toast.loading("Processing your order...");
     const products = myCart.map((item) => ({
       id: item._id,
@@ -141,6 +146,9 @@ const MyCart: FC = () => {
             </Link>
           </div>
         </div>
+      )}
+      {openAuthModal && (
+        <AuthTabs initialTab="login" open setOpen={setOpenAuthModal} />
       )}
     </div>
   );
