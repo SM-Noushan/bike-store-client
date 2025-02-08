@@ -11,7 +11,8 @@ function ProtectedRoute({
 }) {
   const { currentUser } = useAuth();
 
-  if (!currentUser || !role.includes(currentUser?.role as TUserRole))
+  if (!currentUser) return <Navigate to="/" replace />;
+  if (!role.includes(currentUser?.role as TUserRole))
     return <Navigate to="/dashboard" replace />;
 
   return children;

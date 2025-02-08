@@ -104,7 +104,7 @@ const MyDataTable = <T,>({
 
   const finalColumns = actionColumn
     ? [...columns, createActionColumn(actionColumn)]
-    : columns;
+    : [...columns];
   if (hasSerial)
     finalColumns.unshift({
       accessorKey: "_id",

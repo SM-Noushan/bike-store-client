@@ -2,6 +2,7 @@ export * from "./Auth.Types";
 export * from "./Bike.Types";
 export * from "./Form.Types";
 export * from "./Modal.Types";
+export * from "./Order.Types";
 export * from "./Global.Types";
 export * from "./Navbar.Types";
 export * from "./Profile.Types";
