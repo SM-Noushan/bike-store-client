@@ -1,6 +1,6 @@
 import { baseApi } from "../../api/baseApi";
+import { TProductMetaData } from "./productMetaDataSlice";
 import { TBike, TQueryParams, TResponseRedux } from "@/types";
-import { TProductMetaData } from "./productMetadataSlice";
 
 const productPath = "/products";
 

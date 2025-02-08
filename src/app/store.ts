@@ -5,7 +5,7 @@ import { cartSlice } from "./features/cart/cartSlice";
 import { setupListeners } from "@reduxjs/toolkit/query";
 import { productSlice } from "./features/product/productSlice";
 import { combineSlices, configureStore } from "@reduxjs/toolkit";
-import { productMetaDataSlice } from "./features/product/productMetadataSlice";
+import { productMetaDataSlice } from "./features/product/productMetaDataSlice";
 
 const rootReducer = combineSlices(
   baseApi,

@@ -9,6 +9,7 @@ import { useCartHandler } from "@/hooks/useCartHandler";
 export const Product: FC<TProductCard> = ({ bike, badge = false }) => {
   const navigate = useNavigate();
   const { alreadyInCart, handleCart } = useCartHandler(bike);
+  const hasStock = bike?.quantity > 0;
 
   const viewProductDetails = () => navigate(`/bike/${bike._id}`);
 
@@ -27,24 +28,35 @@ export const Product: FC<TProductCard> = ({ bike, badge = false }) => {
         {/* Actions Overlay */}
         <div className="w-full h-32 absolute bg-white bottom-0 md:-bottom-[130px] group-hover:bottom-0 duration-700">
           <ul className="w-full h-full flex flex-col items-end justify-center gap-2 font-bold px-2 border-l border-r">
-            <li onClick={handleCart} className={actionItemClasses}>
-              {alreadyInCart ? "Remove from Cart" : "Add to Cart"}
+            <button
+              onClick={handleCart}
+              className={`${actionItemClasses} disabled:opacity-50 disabled:cursor-not-allowed`}
+              disabled={!hasStock}
+            >
+              {hasStock
+                ? alreadyInCart
+                  ? "Remove from Cart"
+                  : "Add to Cart"
+                : "Out of Stock"}
               <span>
                 <ShoppingCart />
               </span>
-            </li>
-            <li onClick={viewProductDetails} className={actionItemClasses}>
+            </button>
+            <button onClick={viewProductDetails} className={actionItemClasses}>
               View Details
               <span className="text-lg">
                 <Tag />
               </span>
-            </li>
-            <li className={`${actionItemClasses} !cursor-not-allowed`}>
+            </button>
+            <button
+              disabled
+              className={`${actionItemClasses} disabled:opacity-50 disabled:cursor-not-allowed`}
+            >
               Add to Wish List
               <span>
                 <Heart />
               </span>
-            </li>
+            </button>
           </ul>
         </div>
       </div>

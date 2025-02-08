@@ -3,6 +3,10 @@ export const CLOUDINARY_CONFIG = {
   uploadPreset: import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET,
 };
 
+export const STRIPE_CONFIG = {
+  publishableKey: import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY,
+};
+
 export const USER_ROLE = {
   admin: "admin",
   customer: "customer",

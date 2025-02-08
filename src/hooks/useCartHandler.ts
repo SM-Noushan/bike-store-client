@@ -1,4 +1,5 @@
 import { TBike } from "@/types";
+import { useCallback } from "react";
 import {
   addToCart,
   removeCart,
@@ -23,7 +24,9 @@ export const useCartHandler = (bike: TBike | void) => {
   const updateCartItem = (id: string, type: string) =>
     dispatch(updateCart({ id, type }));
 
-  const resetCartItems = () => dispatch(resetCart());
+  const resetCartItems = useCallback(() => {
+    dispatch(resetCart());
+  }, [dispatch]);
 
   const cartItemTotalPrice = myCart.reduce(
     (acc, curr) => acc + curr.price * curr.itemQuantity,

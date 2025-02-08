@@ -2,9 +2,9 @@ import { TQueryParams } from "@/types";
 import MyPagination from "./Pagination";
 import { useEffect, useState } from "react";
 import { firstPage } from "@/constants/Constant";
-import { Skeleton } from "@/components/ui/skeleton";
 import { Product } from "@/component/product/Product";
 import { useBikeParams } from "@/hooks/useBikeParams";
+import Loading from "@/component/shared/loader/Loader";
 import { useGetAllProductQuery } from "@/app/features/product/productApi";
 
 const itemsPerPage = 6;
@@ -17,7 +17,7 @@ const BikeGallery = () => {
     firstPage,
   ]);
 
-  const { data: bikes, isFetching } = useGetAllProductQuery(params);
+  const { data: bikes, isFetching, isLoading } = useGetAllProductQuery(params);
   const {
     page: currentPage = 0,
     limit = 0,
@@ -41,16 +41,13 @@ const BikeGallery = () => {
       ...filterParams,
     ]);
   }, [filterParams]);
-
-  return (
+  return isFetching || isLoading ? (
+    <Loading />
+  ) : (
     <div>
       {/* Product Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-10 md:gap-4 lg:gap-10 min-h-[65vh]">
-        {isFetching ? (
-          Array.from({ length: itemsPerPage }).map((_, index) => (
-            <Skeleton key={index} className="h-80" />
-          ))
-        ) : (bikes?.data?.length ?? 0) > 0 ? (
+        {(bikes?.data?.length ?? 0) > 0 ? (
           bikes?.data?.map((bike) => (
             <div key={bike._id} className="w-full">
               <Product bike={bike} />

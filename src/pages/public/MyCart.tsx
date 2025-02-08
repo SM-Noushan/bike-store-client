@@ -1,11 +1,17 @@
 import { FC } from "react";
+import { toast } from "sonner";
 import { Link } from "react-router-dom";
 import { Input } from "@/components/ui/input";
+import { loadStripe } from "@stripe/stripe-js";
 import { Button } from "@/components/ui/button";
 import emptyCartImg from "@/assets/emptyCart.png";
+import { STRIPE_CONFIG } from "@/constants/Constant";
 import { useCartHandler } from "@/hooks/useCartHandler";
 import CartItem from "@/component/pages/myCart/CartItem";
+import { useCheckoutMutation } from "@/app/features/order/orderApi";
 import Breadcrumbs from "@/component/shared/breadcrumbs/Breadcrumbs";
+
+const stripePromise = loadStripe(STRIPE_CONFIG.publishableKey);
 
 // Cart header component
 const CartHeader: FC = () => (
@@ -20,6 +26,27 @@ const CartHeader: FC = () => (
 const MyCart: FC = () => {
   const { myCart, resetCartItems, cartItemTotalPrice, shippingFee } =
     useCartHandler();
+  const [checkout, { isLoading }] = useCheckoutMutation();
+  const handleCheckout = async () => {
+    const toastId = toast.loading("Processing your order...");
+    const products = myCart.map((item) => ({
+      id: item._id,
+      quantity: item.itemQuantity,
+    }));
+    try {
+      const data = await checkout(products);
+      // console.log(data);
+      // console.log((data?.error as TCustomError)?.data?.message);
+      if (data.error)
+        return toast.error("Gateway issue, try later", { id: toastId });
+      const stripe = await stripePromise;
+      await stripe?.redirectToCheckout({
+        sessionId: data.data as string,
+      });
+    } catch (err) {
+      // console.log({ error });
+    }
+  };
   return (
     <div className="main-wrapper">
       <Breadcrumbs title="Cart" prevLocation="Home" currentLocation="My Cart" />
@@ -81,11 +108,13 @@ const MyCart: FC = () => {
                 </p>
               </div>
               <div className="flex justify-end">
-                <Link to="/checkout">
-                  <Button className="w-52 h-10 rounded-none text-white">
-                    Proceed to Checkout
-                  </Button>
-                </Link>
+                <Button
+                  onClick={handleCheckout}
+                  className="w-52 h-10 rounded-none text-white"
+                  disabled={isLoading}
+                >
+                  Proceed to Checkout
+                </Button>
               </div>
             </div>
           </div>
