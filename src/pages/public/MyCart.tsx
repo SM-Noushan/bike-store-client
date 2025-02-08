@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { loadStripe } from "@stripe/stripe-js";
 import { Button } from "@/components/ui/button";
 import emptyCartImg from "@/assets/emptyCart.png";
-import { STRIPE_CONFIG } from "@/constants/Constant";
+import { STRIPE_CONFIG, USER_ROLE } from "@/constants/Constant";
 import { useCartHandler } from "@/hooks/useCartHandler";
 import CartItem from "@/component/pages/myCart/CartItem";
 import { useCheckoutMutation } from "@/app/features/order/orderApi";
@@ -33,6 +33,8 @@ const MyCart: FC = () => {
   const [checkout, { isLoading }] = useCheckoutMutation();
   const handleCheckout = async () => {
     if (!currentUser) return setOpenAuthModal(true);
+    if (currentUser?.role === USER_ROLE.admin)
+      return toast.error("Admin can't checkout");
     const toastId = toast.loading("Processing your order...");
     const products = myCart.map((item) => ({
       id: item._id,
