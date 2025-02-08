@@ -1,4 +1,5 @@
 import { TBike } from "./Bike.Types";
+import { TUser } from "./Profile.Types";
 import { TCommonResponseData } from "./Global.Types";
 
 export type TOrderItem = {
@@ -18,3 +19,11 @@ export type TOrder = {
   createdAt: Date;
   items: TOrderItem[];
 } & TCommonResponseData;
+
+export type TOrderDetails = {
+  userDetails: TUser;
+  items: {
+    product: TBike;
+    quantity: number;
+  }[];
+} & Omit<TOrder, "items">;

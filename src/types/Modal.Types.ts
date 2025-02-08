@@ -3,7 +3,8 @@ export interface ModalProps {
   open: boolean;
   title: string;
   onClose: (value: boolean) => void;
-  onSave: () => void;
+  onCloseLabel?: string;
+  onSave?: () => void;
   onSaveLabel?: string;
   disabled?: boolean;
 }

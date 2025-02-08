@@ -5,14 +5,16 @@ import Bikes from "@/pages/public/Bikes";
 import Profile from "@/pages/user/Profile";
 import MyOrders from "@/pages/user/Orders";
 import MyCart from "@/pages/public/MyCart";
+import Success from "@/pages/user/Success";
 import AboutUs from "@/pages/public/AboutUs";
 import Error404 from "@/pages/public/Error404";
 import { USER_ROLE } from "@/constants/Constant";
 import ManageUsers from "@/pages/admin/ManageUsers";
 import ManageBikes from "@/pages/admin/ManageBikes";
 import Dashboard from "@/component/layout/Dashboard";
+import ManageOrders from "@/pages/admin/ManageOrders";
 import { createBrowserRouter } from "react-router-dom";
-import { ManageOrders } from "@/pages/admin/ManageOrders";
+import ProtectedRoute from "@/component/layout/Sidebar/ProtectedRoute";
 
 const router = createBrowserRouter([
   // Public Routes
@@ -26,6 +28,14 @@ const router = createBrowserRouter([
       { path: "bike/:id", element: <Bike /> },
       { path: "about-us", element: <AboutUs /> },
       { path: "my-cart", element: <MyCart /> },
+      {
+        path: "success",
+        element: (
+          <ProtectedRoute role={[USER_ROLE.customer]}>
+            <Success />
+          </ProtectedRoute>
+        ),
+      },
     ],
   },
 

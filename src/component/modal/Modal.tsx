@@ -15,6 +15,7 @@ const Modal: FC<ModalProps> = ({
   open,
   title,
   onClose,
+  onCloseLabel = "Cancel",
   onSave,
   onSaveLabel = "Save",
   disabled = false,
@@ -44,11 +45,13 @@ const Modal: FC<ModalProps> = ({
               onClick={() => onClose(false)}
               disabled={disabled}
             >
-              Cancel
+              {onCloseLabel}
             </Button>
-            <Button onClick={() => onSave()} disabled={disabled}>
-              {onSaveLabel}
-            </Button>
+            {onSave && (
+              <Button onClick={onSave} disabled={disabled}>
+                {onSaveLabel}
+              </Button>
+            )}
           </div>
         </div>
       </DialogContent>

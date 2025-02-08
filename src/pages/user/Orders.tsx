@@ -1,6 +1,6 @@
 import { FC, useState } from "react";
-import { TBike, TOrder, TOrderItem, TQueryParams } from "@/types";
 import { ColumnDef } from "@tanstack/react-table";
+import { TOrder, TOrderItem, TQueryParams } from "@/types";
 import MyDataTable from "@/component/dataTable/MyDataTable";
 import { firstPage, itemPerDataTable } from "@/constants/Constant";
 import { useGetMyOrdersQuery } from "@/app/features/order/orderApi";
@@ -17,19 +17,20 @@ const columns: ColumnDef<TOrder>[] = [
       }
       let totalPrice = 0;
       return (
-        <div className="xl:max-h-28 overflow-auto thin-scrollbar space-y-1">
-          {items?.map((orderItem, idx) => {
-            const { name, brand, model, category, createdAt, price, image } =
+        <div
+          className="xl:max-h-28 overflow-auto thin-scrollbar space-y-1"
+          title={`Ordered on ${new Date(
+            row.original.createdAt
+          ).toLocaleDateString()}`}
+        >
+          {items?.map((orderItem) => {
+            const { name, brand, model, category, price, image } =
               orderItem.product;
 
             const subTotalPrice = price * orderItem.quantity;
             totalPrice += subTotalPrice;
             return (
-              <div
-                key={orderItem._id}
-                className="flex items-center gap-4 px-6"
-                title={`Ordered on ${new Date(createdAt).toLocaleDateString()}`}
-              >
+              <div key={orderItem._id} className="flex items-center gap-4 px-6">
                 {/* Product Info */}
                 <div className="flex-1 flex flex-col xl:flex-row xl:items-center gap-x-4">
                   <img

@@ -82,7 +82,9 @@ const MyDataTable = <T,>({
     setParams((prevParams) => {
       return [
         ...prevParams.filter(
-          (param) => !keys.includes(param.key) && param.key !== "page"
+          (param) =>
+            ![...keys, ...filterKeys].includes(param.key) &&
+            param.key !== "page"
         ),
         firstPage,
         ...filterParams,
