@@ -8,6 +8,7 @@ import Loading from "@/component/shared/loader/Loader";
 import { useGetAllProductQuery } from "@/app/features/product/productApi";
 
 const itemsPerPage = 6;
+
 const BikeGallery = () => {
   const { filterParams } = useBikeParams();
   // console.log(filterParams);
@@ -17,7 +18,7 @@ const BikeGallery = () => {
     firstPage,
   ]);
 
-  const { data: bikes, isFetching, isLoading } = useGetAllProductQuery(params);
+  const { data: bikes, isLoading } = useGetAllProductQuery(params);
   const {
     page: currentPage = 0,
     limit = 0,
@@ -33,7 +34,6 @@ const BikeGallery = () => {
       { key: "page", value: value.toString() },
     ]);
   };
-
   useEffect(() => {
     setParams([
       { key: "limit", value: itemsPerPage.toString() },
@@ -41,7 +41,11 @@ const BikeGallery = () => {
       ...filterParams,
     ]);
   }, [filterParams]);
-  return isFetching || isLoading ? (
+
+  useEffect(() => {
+    setParams([{ key: "limit", value: itemsPerPage.toString() }, firstPage]);
+  }, []);
+  return isLoading ? (
     <Loading />
   ) : (
     <div>

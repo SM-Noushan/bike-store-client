@@ -1,15 +1,15 @@
 import { z } from "zod";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import FilterByBrand from "./FilterBy/Brand";
 import FilterByModel from "./FilterBy/Model";
-import { useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import FilterByCategory from "./FilterBy/Category";
 import { useBikeParams } from "@/hooks/useBikeParams";
 import { zodResolver } from "@hookform/resolvers/zod";
 import FilterByPriceRange from "./FilterBy/PriceRange";
 import FilterByAvailability from "./FilterBy/Availability";
-import { useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const schema = z.object({
   priceRange: z
@@ -23,6 +23,7 @@ const schema = z.object({
 
 const SideFilter = () => {
   const { search } = useLocation();
+  const navigate = useNavigate();
   const { handleFilter, handleReset } = useBikeParams();
   const hasCategory = search.split("category=")[1];
   const formMethods = useForm({
@@ -58,6 +59,7 @@ const SideFilter = () => {
   const handleLocalReset = () => {
     formMethods.reset();
     handleReset();
+    navigate("/bikes");
   };
   return (
     <div className="md:w-full max-md:min-w-72 mx-auto mx:mx-0 py-6 md:py-0 flex flex-col gap-6 max-h-[calc(100dvh-150px)] md:max-h-max overflow-y-auto">
