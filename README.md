@@ -4,16 +4,9 @@
 
 **BikeStore** is a robust and user-friendly bike shop platform that delivers seamless experiences for both customers and administrators. It features secure authentication, smooth product and order management, responsive design, and integrated payment processing via Stripe. The system supports real-time updates using Stripe WebHooks to sync payment data directly into the database, ensuring reliable and up-to-date order tracking.
 
-**🔗 Live Site**: [https://bike-store-by-sm-nowshan.vercel.app](https://bike-store-by-sm-nowshan.vercel.app)
+**🔗 Live Site**: [https://suzukiriderszone.vercel.app](https://suzukiriderszone.vercel.app)
 
-**🔗 Backend API**: [https://bike-store-server-one.vercel.app](https://bike-store-server-one.vercel.app)
-
-### 🔑 Admin Credentials
-
-```
-Email: mail@super.admin
-Password: admin7
-```
+**🔗 Backend API**: [https://suzukiriderszone-server.vercel.app](https://suzukiriderszone-server.vercel.app)
 
 ---
 
@@ -131,8 +124,8 @@ Before you begin, ensure you have the following installed on your system:
 1. **Clone the Repository**:
 
    ```sh
-   git clone https://github.com/sm-noushan/bike-store-client
-   cd bike-store-client
+   git clone https://github.com/tanvir50/suzukiriderszone-client.git
+   cd suzukiriderszone-client
    ```
 
 2. **Install Dependencies**:
@@ -143,7 +136,7 @@ Before you begin, ensure you have the following installed on your system:
 
 3. **Set Up Environment Variables**: Create a `.env.local` file in the root directory and add the necessary environment variables. (**Important!**)
 
-4. **Set Up Server**: For detailed information, refer to the [Setup](https://github.com/sm-noushan/bike-store-server) in the back-end repository's `README.md`. (**Important!**)
+4. **Set Up Server**: For detailed information, refer to the [Setup](https://github.com/tanvir50/suzukiriderszone-server) in the back-end repository's `README.md`. (**Important!**)
 
 5. **Run the Application**:
 
