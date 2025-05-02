@@ -1,8 +1,8 @@
 import { z } from "zod";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import FilterByBrand from "./FilterBy/Brand";
 import FilterByModel from "./FilterBy/Model";
+// import FilterByBrand from "./FilterBy/Brand";
 import { Button } from "@/components/ui/button";
 import FilterByCategory from "./FilterBy/Category";
 import { useBikeParams } from "@/hooks/useBikeParams";
