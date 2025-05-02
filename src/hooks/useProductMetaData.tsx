@@ -4,7 +4,7 @@ import {
   selectProductBrands,
   selectProductModels,
   selectProductCategories,
-} from "@/app/features/product/productMetadataSlice";
+} from "@/app/features/product/productMetaDataSlice";
 import { useAppDispatch, useAppSelector } from "@/app/hook";
 import { useGetProductMetaDataQuery } from "@/app/features/product/productApi";
 
@@ -18,9 +18,9 @@ export const useProductMetaData = () => {
     }
   }, [productMEtaData, dispatch]);
 
-  const brands = useAppSelector(selectProductBrands);
-  const models = useAppSelector(selectProductModels);
-  const categories = useAppSelector(selectProductCategories);
+  const brands: string[] = useAppSelector(selectProductBrands);
+  const models: string[] = useAppSelector(selectProductModels);
+  const categories: string[] = useAppSelector(selectProductCategories);
 
   return {
     productBrands: brands,
