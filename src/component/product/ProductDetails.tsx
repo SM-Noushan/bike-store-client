@@ -1,4 +1,5 @@
 import { TBike } from "@/types";
+import { splitString } from "@/utils";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useCartHandler } from "@/hooks/useCartHandler";
@@ -12,7 +13,7 @@ const ProductDetails = ({ bike }: { bike: TBike }) => {
         <h2 className="text-4xl font-semibold">{bike.name}</h2>
         <Badge>{bike.inStock ? "In stock" : "Out of stock"}</Badge>
       </div>
-      <p className="text-xl font-semibold">${bike.price}</p>
+      <p className="text-xl font-semibold">Tk {bike.price}</p>
       <p className="text-base text-neutral-600">Q: {bike.quantity}</p>
       <p className="text-base text-neutral-600">{bike.description}</p>
       <p className="text-sm">Be the first to review this product.</p>
@@ -29,7 +30,7 @@ const ProductDetails = ({ bike }: { bike: TBike }) => {
       <div className="font-normal text-sm flex items-center gap-2">
         <p>
           <span className="text-base font-medium">Category: </span>
-          {bike.category}
+          {splitString(bike.category)}
         </p>
         <p>
           <span className="text-base font-medium">Model: </span>

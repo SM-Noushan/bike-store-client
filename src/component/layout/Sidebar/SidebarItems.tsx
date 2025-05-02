@@ -11,6 +11,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
+import logo from "/srz_logo.jpg";
 import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { Link, NavLink, useLocation } from "react-router-dom";
@@ -69,8 +70,13 @@ export function SidebarItems({
   const { pathname } = useLocation();
   return (
     <Sidebar {...props} variant="floating">
-      <SidebarHeader className="text-2xl font-extrabold px-3">
-        <Link to="/">BikeStore</Link>
+      <SidebarHeader className="text-2xl font-extrabold px-3 flex-row">
+        <img
+          src={logo}
+          className="size-9"
+          alt="suzuki-riders-zone-logo"
+        />
+        <Link to="/">SRZ</Link>
       </SidebarHeader>
       <SidebarContent>
         {items.map((sidebarItem) => (

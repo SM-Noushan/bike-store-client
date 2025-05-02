@@ -98,19 +98,19 @@ const MyCart: FC = () => {
                 <p className="flex items-center justify-between border border-gray-400 border-b-0 py-1.5 text-lg px-4 font-medium">
                   Subtotal
                   <span className="font-semibold tracking-wide font-titleFont">
-                    ${cartItemTotalPrice}
+                    Tk {cartItemTotalPrice}
                   </span>
                 </p>
                 <p className="flex items-center justify-between border border-gray-400 border-b-0 py-1.5 text-lg px-4 font-medium">
                   Shipping Charge
                   <span className="font-semibold tracking-wide font-titleFont">
-                    ${shippingFee}
+                    Tk {shippingFee}
                   </span>
                 </p>
                 <p className="flex items-center justify-between border border-gray-400 py-1.5 text-lg px-4 font-medium">
                   Total
                   <span className="font-bold tracking-wide text-lg font-titleFont">
-                    ${cartItemTotalPrice + shippingFee}
+                    Tk {cartItemTotalPrice + shippingFee}
                   </span>
                 </p>
               </div>

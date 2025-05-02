@@ -5,6 +5,7 @@ import {
   DisclosurePanel,
   Transition,
 } from "@headlessui/react";
+import logo from "/srz_logo.jpg";
 import { NavLink } from "react-router-dom";
 import { MenuIcon, XIcon } from "lucide-react";
 
@@ -37,7 +38,12 @@ const Header: React.FC<HeaderProps> = ({ open }) => (
     <div className="flex items-center justify-between flex-wrap main-wrapper">
       {/* Logo */}
       <NavLink to="/" className="flex items-center">
-        <h1 className="font-black text-2xl">BikeStore</h1>
+        <img
+          src={logo}
+          className="size-7 lg:size-9"
+          alt="suzuki-riders-zone-logo"
+        />
+        <h1 className="font-black text-2xl">Suzuki Riders Zone</h1>
       </NavLink>
 
       {/* Mobile menu button */}
@@ -114,7 +120,12 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ open, close }) => (
 
         {/* Mobile Logo */}
         <NavLink to="/" className="flex items-center">
-          <h1 className="font-black text-2xl text-white mb-4">BikeStore</h1>
+          <img
+            src={logo}
+            className="size-6 mb-4 mr-2"
+            alt="suzuki-riders-zone-logo"
+          />
+          <h1 className="font-black text-2xl text-white mb-4">SRZ</h1>
         </NavLink>
 
         {/* Mobile Navigation Links */}

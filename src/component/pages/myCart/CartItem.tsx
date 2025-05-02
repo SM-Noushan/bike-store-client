@@ -45,7 +45,7 @@ const CartItem = ({ item }: { item: TCart }) => {
                       py-4 md:py-0 px-4 md:px-0 gap-6 md:gap-0"
       >
         <div className="flex w-1/3 items-center text-lg font-semibold">
-          ${item.price}
+          Tk {item.price}
         </div>
         <div className="w-1/3 flex items-center gap-6 text-lg">
           <CartItemActionButton
@@ -61,7 +61,7 @@ const CartItem = ({ item }: { item: TCart }) => {
           />
         </div>
         <div className="w-1/3 flex items-center font-bold text-lg">
-          <p>${item.price * item.itemQuantity}</p>
+          <p>Tk {item.price * item.itemQuantity}</p>
         </div>
       </div>
     </div>

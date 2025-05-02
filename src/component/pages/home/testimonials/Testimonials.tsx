@@ -14,20 +14,20 @@ const testimonials: Testimonial[] = [
   {
     id: 1,
     content:
-      "I absolutely love BikeStore! Their bikes are top-notch, and every ride feels like a new adventure. The service and quality truly exceed expectations. I highly recommend them!",
+      "They are customer friendly and well behaved and most importantly very good service, they provided my bike registration and other documents within a short period of time. I hope their service should remain the same in future.",
     avatar:
-      "https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-1.2.1&auto=format&fit=crop&w=880&q=80",
-    name: "Ryan Harris",
-    designation: "Professional Cyclist",
+      "https://res.cloudinary.com/dfgyejofj/image/upload/v1746211661/wnost3n5ic0crc1drci8.jpg",
+    name: "Faisal Kabir",
+    designation: "Executive of Finance and Procurement",
   },
   {
     id: 2,
     content:
-      "BikeStore offers the best selection and service in town. Their attention to detail and commitment to quality make every purchase a delight. Highly recommended!",
+      "Very nice behaviour. Highly recommended if you want to buy Suzuki Motorcycles. Also, they got me a nice number with very fast processing. Really satisfied with their service.",
     avatar:
-      "https://images.unsplash.com/photo-1499470932971-a90681ce8530?ixlib=rb-1.2.1&auto=format&fit=crop&w=1470&q=80",
-    name: "Ema Smith",
-    designation: "Bike Enthusiast & Blogger",
+      "https://res.cloudinary.com/dfgyejofj/image/upload/v1746211662/wtrlajta4gfyrgvim6ec.jpg",
+    name: "Mahathir Jeshan ",
+    designation: "Student |Bike Enthusiast",
   },
 ];
 
@@ -56,11 +56,11 @@ const Testimonials: FC = () => {
       <div className="container px-6 py-10 mx-auto">
         <h1 className="text-2xl font-semibold text-center text-gray-800/85 capitalize lg:text-3xl">
           What our <span className="text-neutral-950 font-bold">clients</span>{" "}
-          say about BikeStore
+          say about us
         </h1>
         <p className="max-w-2xl mx-auto mt-6 text-center text-gray-500">
-          At BikeStore, our customers' satisfaction is our top priority.
-          Discover why riders trust us for their biking adventures.
+          At Suzuki Riders Zone, our customers' satisfaction is our top
+          priority. Discover why riders trust us for their biking adventures.
         </p>
         <div className="grid grid-cols-1 gap-8 mx-auto mt-8 lg:grid-cols-2 xl:mt-10 max-w-7xl">
           {testimonials.map((testimonial) => (

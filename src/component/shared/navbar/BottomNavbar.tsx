@@ -6,15 +6,15 @@ import {
   ShoppingCart,
 } from "lucide-react";
 import MyMenubar from "./MyMenubar";
-import { capitalize } from "@/utils";
+import { splitString } from "@/utils";
 import { useAuth } from "@/hooks/useAuth";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useBikeParams } from "@/hooks/useBikeParams";
 import { useCartHandler } from "@/hooks/useCartHandler";
 import { MenubarShortcut } from "@/components/ui/menubar";
-import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useProductMetaData } from "@/hooks/useProductMetaData";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const unsignedUserOptions = [
   { name: "Login", to: "login" },
@@ -46,7 +46,7 @@ const BottomNavbar = () => {
         <div className="main-wrapper flex justify-between items-center flex-wrap gap-y-4">
           <MyMenubar
             navItems={productCategories.map((category) => ({
-              name: capitalize(category),
+              name: splitString(category),
               to: `/bikes?category=${category.toLowerCase()}`,
             }))}
             label={

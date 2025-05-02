@@ -68,7 +68,7 @@ const SideFilter = () => {
       {/* Category */}
       <FilterByCategory formMethods={formMethods} />
       {/* Brand */}
-      <FilterByBrand formMethods={formMethods} />
+      {/* <FilterByBrand formMethods={formMethods} /> */}
       {/* Model */}
       <FilterByModel formMethods={formMethods} />
       {/* Availability */}

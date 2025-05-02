@@ -1,4 +1,5 @@
 import { FC } from "react";
+import { splitString } from "@/utils";
 import { TProductCard } from "@/types";
 import { Badge } from "@/components/ui/badge";
 import { useNavigate } from "react-router-dom";
@@ -66,11 +67,11 @@ export const Product: FC<TProductCard> = ({ bike, badge = false }) => {
           <h2 className="text-lg text-primeColor font-bold line-clamp-1">
             {bike.name}
           </h2>
-          <p className="text-[#767676] text-[14px]">${bike.price}</p>
+          <p className="text-[#767676] text-[14px]">Tk {bike.price}</p>
         </div>
         <div>
           <p className="text-[#767676] text-[14px] capitalize">
-            {bike.category} - {bike.brand} ({bike.model})
+            {splitString(bike.category)} - {bike.brand} ({bike.model})
           </p>
         </div>
       </div>

@@ -16,7 +16,7 @@ import Modal from "@/component/modal/Modal";
 import { zodResolver } from "@hookform/resolvers/zod";
 import FormWrapper from "@/component/form/FormWrapper";
 import { bikeSchema, updateBikeSchema } from "@/schema";
-import { capitalize, uploadToCloudinary } from "@/utils";
+import { splitString, uploadToCloudinary } from "@/utils";
 import { useProductMetaData } from "@/hooks/useProductMetaData";
 
 const BikeInputModal: FC<IModalPropsWithProductData<TBike>> = ({
@@ -34,15 +34,16 @@ const BikeInputModal: FC<IModalPropsWithProductData<TBike>> = ({
       type: "text",
       placeholder: "Enter bike name",
     },
-    {
-      name: "brand",
-      label: "Brand",
-      type: "text",
-      placeholder: "Enter bike brand",
-    },
+    // {
+    //   name: "brand",
+    //   label: "Brand",
+    //   type: "text",
+    //   placeholder: "Enter bike brand",
+    //   defaultValue: "Suzuki",
+    // },
     {
       name: "model",
-      label: "Model",
+      label: "Year",
       type: "text",
       placeholder: "Enter bike model",
     },
@@ -59,7 +60,7 @@ const BikeInputModal: FC<IModalPropsWithProductData<TBike>> = ({
       placeholder: "Select a category",
       options: productCategories.map((category) => ({
         value: category.toLowerCase(),
-        label: capitalize(category),
+        label: splitString(category),
       })),
     },
     {

@@ -1,6 +1,6 @@
-import { capitalize } from "@/utils";
 import { useLocation } from "react-router-dom";
 import FilterByHeading from "./FilterByHeading";
+import { capitalize, splitString } from "@/utils";
 import { TFieldConfig, TFormMethod } from "@/types";
 import FormWrapper from "@/component/form/FormWrapper";
 import { useProductMetaData } from "@/hooks/useProductMetaData";
@@ -25,7 +25,7 @@ export default function FilterByCategory({ formMethods }: TFormMethod) {
           ]
         : productCategories.map((category) => ({
             value: category.toLowerCase(),
-            label: capitalize(category),
+            label: splitString(category),
           })),
     },
   ];

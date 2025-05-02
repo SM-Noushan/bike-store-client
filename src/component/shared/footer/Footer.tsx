@@ -1,7 +1,8 @@
-import React, { useState, ChangeEvent } from "react";
-import { Facebook, Instagram, Twitter } from "lucide-react";
+import logo from "/srz_logo.jpg";
+import { Facebook } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import React, { useState, ChangeEvent } from "react";
 
 // FooterListTitle Component
 interface FooterListTitleProps {
@@ -61,19 +62,21 @@ const NewsletterSubscription: React.FC = () => {
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
             setEmail(e.target.value)
           }
+          disabled
           placeholder="Email Address"
         />
         <Button
           onClick={handleSubscribe}
           className="w-full md:w-auto sm:mx-4"
           variant="default"
+          disabled
         >
           Subscribe
         </Button>
       </div>
       {error && <p className="text-red-600 text-sm mt-2">{error}</p>}
       {subscribed && (
-        <p className="text-green-600 text-sm mt-2">Subscribed successfully!</p>
+        <p className="text-green-600 text-sm mt-2">In Development!</p>
       )}
     </>
   );
@@ -87,9 +90,11 @@ interface SocialIconItem {
 }
 
 const socialIconItems: SocialIconItem[] = [
-  { href: "#", label: "Instagram", Icon: Instagram },
-  { href: "#", label: "Facebook", Icon: Facebook },
-  { href: "#", label: "Twitter", Icon: Twitter },
+  {
+    href: "https://www.facebook.com/suzukiriderszone",
+    label: "Facebook",
+    Icon: Facebook,
+  },
 ];
 
 const SocialIcons: React.FC = () => (
@@ -112,10 +117,10 @@ const ContactInfo: React.FC = () => (
   <div className="text-center lg:text-right">
     <p className="font-semibold text-gray-800">Contact Us</p>
     <div className="flex flex-col items-center lg:items-end mt-5 space-y-2">
-      <p className="text-gray-600">1234 Bike Lane</p>
-      <p className="text-gray-600">BikeBazar, CV 12345</p>
-      <p className="text-gray-600">+880 11223-34455</p>
-      <p className="text-gray-600">info@bikestore.com</p>
+      <p className="text-gray-600">Plot #23/A, Block#H Avenue#3</p>
+      <p className="text-gray-600">Suzuki Riders Zone</p>
+      <p className="text-gray-600">Prosikha Mor, Mirpur-2</p>
+      <p className="text-gray-600">+880 1998-333844</p>
     </div>
   </div>
 );
@@ -126,16 +131,12 @@ const ContactInfo: React.FC = () => (
 
 const Footer: React.FC = () => {
   const quickLinks = [
-    { label: "Home", href: "#" },
-    { label: "Who We Are", href: "#" },
-    { label: "Our Philosophy", href: "#" },
+    { label: "Home", href: "/" },
+    { label: "Who We Are", href: "/about-us" },
+    { label: "Bikes", href: "/bikes" },
   ];
 
-  const branchesLinks = [
-    { label: "Cox's Bazar", href: "#" },
-    { label: "Chittagong", href: "#" },
-    { label: "Dhaka", href: "#" },
-  ];
+  const branchesLinks = [{ label: "Mirpur", href: "#" }];
 
   return (
     <footer className="bg-neutral-200/65 py-14">
@@ -165,8 +166,13 @@ const Footer: React.FC = () => {
         <hr className="my-6 border-neutral-400/50 md:my-8" />
 
         <div className="flex items-center justify-between">
-          <a className="flex items-center" href="#">
-            <h1 className="font-black text-2xl">BikeStore</h1>
+          <a className="flex items-center" href="/">
+            <img
+              src={logo}
+              className="size-6 md:size-7 lg:size-9"
+              alt="suzuki-riders-zone-logo"
+            />
+            <h1 className="font-black text-2xl">Suzuki Riders Zone</h1>
           </a>
           <div className="hidden sm:block lg:hidden">
             <NewsletterSubscription />

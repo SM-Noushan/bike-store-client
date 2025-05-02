@@ -1,12 +1,10 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import Slider, { Settings } from "react-slick";
-import banner1 from "../../../../assets/banner/banner1.jpg";
-import banner2 from "../../../../assets/banner/banner2.png";
-import banner3 from "../../../../assets/banner/banner3.png";
-import banner4 from "../../../../assets/banner/banner4.png";
-import banner5 from "../../../../assets/banner/banner5.png";
-import banner6 from "../../../../assets/banner/banner6.png";
+import banner1 from "../../../../assets/banner/banner1.png";
+import banner2 from "../../../../assets/banner/banner2.jpg";
+import banner3 from "../../../../assets/banner/banner3.jpg";
+import banner4 from "../../../../assets/banner/banner4.jpg";
+import banner5 from "../../../../assets/banner/banner5.jpg";
 
 interface ImageProps {
   imgSrc: string;
@@ -52,18 +50,16 @@ const Banner: React.FC = () => {
     <div className="w-full bg-white relative">
       <Slider {...settings}>
         {/* {Array.from({ length: 3 }).map((_, i) => ( */}
-        {[banner1, banner2, banner3, banner4, banner5, banner6].map(
-          (banner, idx) => (
-            <Link to="/bikes" key={idx}>
-              <div className="">
-                <Image
-                  className="object-cover w-full h-56 md:h-[calc(100dvh-400px)] lg:h-[calc(100dvh-260px)]"
-                  imgSrc={banner}
-                />
-              </div>
-            </Link>
-          )
-        )}
+        {[banner1, banner2, banner3, banner4, banner5].map((banner, idx) => (
+          <div key={idx}>
+            <div className="">
+              <Image
+                className="object-cover w-full h-56 md:h-[calc(100dvh-400px)] lg:h-[calc(100dvh-260px)]"
+                imgSrc={banner}
+              />
+            </div>
+          </div>
+        ))}
       </Slider>
     </div>
   );
